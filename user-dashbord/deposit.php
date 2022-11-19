@@ -86,6 +86,17 @@
                                                   </div>
                                              </div>
 
+                                             <div class="col-md-6">
+                                                  <div class="card">
+                                                       <div class="card-body">
+                                                            <div class="d-flex">
+                                                                 <img src="https://imgs.search.brave.com/lyo7BA_r7eqNAjOWI0HmujEo9iN2zdXdTE43wjCNhxg/rs:fit:453:225:1/g:ce/aHR0cHM6Ly90c2Uy/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5p/Rm9TRE9iM1JEZXBD/U3V4WHhNNEVnSGFI/diZwaWQ9QXBp" width="10%" alt="">
+                                                                 <p class="ms-auto">Ethereum</p>
+                                                            </div>
+                                                       </div>
+                                                  </div>
+                                             </div>
+
                                         </div>
                                    </form>
                               </div>

@@ -17,6 +17,8 @@
 <script src="js/charts-home.js"></script>
 <!-- Main File-->
 <script src="js/front.js"></script>
+<script src="../assets/toastr-master/build/toastr.min.js"></script>
+
 <script>
      // ------------------------------------------------------- //
      //   Inject SVG Sprite - 

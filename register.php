@@ -1,5 +1,5 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) session_start();
 require './process/pdo.php';
 require 'assets/octaValidate-PHP-main/src/Validate.php';
 
@@ -74,8 +74,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                $country = $_POST['country'];
                $balance = 0.00;
 
-               $query = "INSERT INTO users (	fullName,	email, password, phone, country,balance)
-               VALUES(:fullname, :email, :password, :phone, :country, :balance)";
+               $query = "INSERT INTO users (	fullName,	email, password, phone, country,balance,username	)
+               VALUES(:fullname, :email, :password, :phone, :country, :balance, :username)";
                $data = [
                     'fullname' => $fullName,
                     'email' => $email,
@@ -83,6 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     'phone' => $phone,
                     'country' => $country,
                     'balance' => $balance,
+                    'username' => $username
                ];
 
                $result = $db->Insert($query, $data);
@@ -96,6 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $_SESSION['phone'] = $phone;
                     $_SESSION['country'] = $country;
                     $_SESSION['balance'] = $balance;
+                    $_SESSION['username	'] = $username;
                     header("Location:user-dashbord");
                } else {
                     $_SESSION['error'] = 1;

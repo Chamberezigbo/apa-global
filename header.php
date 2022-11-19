@@ -103,7 +103,7 @@
                                    <li>
                                         <a href="register.php">Register</a>
                                    </li>
-                                   <li><a href="login.php">Login</a></li>
+                                   <li><a href="user-dashbord/login.php">Login</a></li>
                               </ul>
                          </div><!-- end of nav-collapse -->
 
