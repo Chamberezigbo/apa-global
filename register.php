@@ -96,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $_SESSION['phone'] = $phone;
                     $_SESSION['country'] = $country;
                     $_SESSION['balance'] = $balance;
-                    header("Location:users/dashbord.php");
+                    header("Location:user-dashbord");
                } else {
                     $_SESSION['error'] = 1;
                     $_SESSION['errorMassage'] = "Signup was not successful";
@@ -229,7 +229,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                                   </div>
                                                   <div class="field my-5">
                                                        <!-- <label class="label">Country</label> -->
-                                                       <div class="control has-icons-left has-icons-right">
+                                                       <div class="control">
                                                             <select class="selectpicker countrypicker" name="country" data-flag="true"></select>
                                                             <!-- <input class="input is-success" name="country" type="text" placeholder="Text input"> -->
                                                        </div>
@@ -238,7 +238,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                                   <div class="field">
                                                        <label class="label">Referral ID</label>
                                                        <div class="control has-icons-left has-icons-right">
-                                                            <input class="input is-success" name="referralId" type="text" placeholder="Text input">
+                                                            <input class="input is-success" name="referralId" type="text" placeholder="Referral optional">
                                                             <span class="icon is-small is-left">
                                                                  <i class="fa-thin fa-repeat"></i>
                                                             </span>
