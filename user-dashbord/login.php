@@ -3,7 +3,8 @@
 if (session_status() === PHP_SESSION_NONE) session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-     require '../process/db.php';
+     require '../process/pdo.php';
+     $db = new DatabaseClass();
      $email = trim($_POST['loginUsername']);
      $password = $_POST['loginPassword'];
      // $date = date("Y/m/d");
@@ -21,15 +22,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           header("Location:admin-dashboard/index.php");
           exit();
      } else {
-          $sql = "SELECT * FROM users WHERE username = '$email' OR email = '$email'";
-          $result = mysqli_fetch_assoc(mysqli_query($conn, $sql));
+          // $sql = "SELECT * FROM users WHERE username = '$email' OR email = '$email'";
+          // $result = mysqli_fetch_assoc(mysqli_query($conn, $sql));
+          $result = $db->SelectOne("SELECT * FROM users WHERE username = :email OR email = :email", ['email' => $email]);
           if (($result)) {
                if ($result['is_activated'] == 'no') {
                     print('<script>
                          toastr.denger("Something went wrong contact the Customer care");
                     </script>');
                } else {
-                    if ($password === $result['password']) {
+                    if (password_verify($password, $result['password'])) {
                          // $sql = "UPDATE  users SET lastSeen = '$fullDate'  WHERE email= '$email'";
                          // $resultSeen = mysqli_query($conn, $sql);
                          // if ($resultSeen) {
