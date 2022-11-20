@@ -1,17 +1,34 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) session_start();
-require_once("db.php");
+require("../process/pdo.php");
 error_reporting(0);
 $image = "../admin-dashboard/" . $_SESSION['image'];
 if (!$_SESSION['auth']) {
      header('location:../index.php');
+     die();
 } else {
      $currentTime = time();
      if ($currentTime > $_SESSION['expire']) {
           session_unset();
           session_destroy();
           header('location:../index.php');
+          die();
      } else {
+          $db = new DatabaseClass();
+          $user_Id = $_SESSION['user_id'];
+          $result = $db->SelectOne("SELECT * FROM users WHERE user_id = :userId", ['userId' => $user_Id]);
+          if ($result) {
+               $email = $result['email'];
+               $fullName = $result['fullName'];
+               $balance = $result['balance'];
+               $bonus = $result['total_bonus'];
+               $username = $result['username'];
+               ($result['total_profit'] == NULL) ? $profit = 0 : $profit = $result['total_profit'];
+               ($result['total_inv_plans'] == NULL) ? $totalInvestment = 0 : $totalInvestment = $result['total_inv_plans'];
+               ($result['total_act_plans'] == NULL) ? $totalAccountPlan = 0 : $totalAccountPlan = $result['total_act_plans'];
+               ($result['total_deposit'] == NULL) ? $totalDeposit = 0 : $totalDeposit = $result['total_deposit'];
+               ($result['total_withdraws'] == NULL) ? $totalWithdraws = 0 : $totalWithdraws = $result['total_withdraws'];
+          }
 ?>
           <!DOCTYPE html>
           <html>
@@ -61,7 +78,7 @@ if (!$_SESSION['auth']) {
                                    <div class="navbar-holder d-flex align-items-center justify-content-between w-100">
                                         <!-- Navbar Header-->
                                         <div class="navbar-header">
-                                             <!-- Navbar Brand --><a class="navbar-brand d-none d-sm-inline-block" href="index.html">
+                                             <!-- Navbar Brand --><a class="navbar-brand d-none d-sm-inline-block" href="index.php">
                                                   <div class="brand-text d-none d-lg-inline-block"><span>APA </span><strong> Financial</strong></div>
                                                   <div class="brand-text d-none d-sm-inline-block d-lg-none"><strong>APA</strong></div>
                                              </a>
@@ -100,7 +117,7 @@ if (!$_SESSION['auth']) {
                                                   </ul>
                                              </li>
                                              <!-- Logout    -->
-                                             <li class="nav-item"><a class="nav-link text-white" href="login.html"> <span class="d-none d-sm-inline">Logout</span>
+                                             <li class="nav-item"><a class="nav-link text-white" href="login.php"> <span class="d-none d-sm-inline">Logout</span>
                                                        <svg class="svg-icon svg-icon-xs svg-icon-heavy">
                                                             <use xlink:href="#security-1"> </use>
                                                        </svg></a></li>
@@ -115,7 +132,7 @@ if (!$_SESSION['auth']) {
                               <!-- Sidebar Header-->
                               <div class="sidebar-header d-flex align-items-center py-4 px-3">
                                    <div class="ms-3 title">
-                                        <h1 class="h4 mb-2">Mark Stephen</h1>
+                                        <h1 class="h4 mb-2"><?= $fullName ?></h1>
                                    </div>
                               </div>
                               <!-- Sidebar Navidation Menus--><span class="text-uppercase text-gray-400 text-xs letter-spacing-0 mx-3 px-2 heading">Main</span>

@@ -38,33 +38,23 @@ require_once './header.php';
                                         <table class="table mb-0">
                                              <thead>
                                                   <tr>
-                                                       <th>#</th>
-                                                       <th>First Name</th>
-                                                       <th>Last Name</th>
-                                                       <th>Username</th>
+                                                       <th>Plan</th>
+                                                       <th>Amount</th>
+                                                       <th>Type</th>
+                                                       <th>Date Created</th>
                                                   </tr>
                                              </thead>
                                              <tbody>
                                                   <tr>
-                                                       <th scope="row">1</th>
-                                                       <td>Mark</td>
-                                                       <td>Otto</td>
-                                                       <td>@mdo</td>
-                                                  </tr>
-                                                  <tr>
-                                                       <th scope="row">2</th>
-                                                       <td>Jacob</td>
-                                                       <td>Thornton</td>
-                                                       <td>@fat</td>
-                                                  </tr>
-                                                  <tr>
-                                                       <th class="border-bottom-0" scope="row">3</th>
-                                                       <td class="border-bottom-0">Larry</td>
-                                                       <td class="border-bottom-0">the Bird</td>
-                                                       <td class="border-bottom-0">@twitter</td>
+                                                       <td>
+
+                                                       </td>
                                                   </tr>
                                              </tbody>
                                         </table>
+                                        <p class="text-center">
+                                             No data
+                                        </p>
                                    </div>
                               </div>
                          </div>

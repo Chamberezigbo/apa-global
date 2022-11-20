@@ -37,7 +37,7 @@ $valRules = array(
      ),
      "pass" => array(
           ["R", "Your password is required"],
-          ["PWD", "this must be a password"]
+          ["PWD", "Password must contain a capital, lowercase and unique character or specail character"]
      ),
      "confirmPass" => array(
           ["R", "Your password is required"],
@@ -72,11 +72,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                $phone = $_POST['phone'];
                $password = $_POST['pass'];
                $country = $_POST['country'];
-               $balance = 0.00;
+               $balance = 5;
+               $user_id = md5(time() . $email);
 
-               $query = "INSERT INTO users (	fullName,	email, password, phone, country,balance,username	)
-               VALUES(:fullname, :email, :password, :phone, :country, :balance, :username)";
+               $query = "INSERT INTO users (	user_id, fullName,	email, password, phone, country,balance,username)
+               VALUES(:user_id, :fullname, :email, :password, :phone, :country, :balance, :username)";
                $data = [
+                    'user_id' => $user_id,
                     'fullname' => $fullName,
                     'email' => $email,
                     'password' => $password,
@@ -91,13 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $_SESSION['auth'] = true;
                     $_SESSION['start'] = time();
                     $_SESSION['expire'] = $_SESSION['start'] + (40 * 60);
-                    $_SESSION['fullName'] = $fullName;
-                    $_SESSION['email'] = $email;
-                    $_SESSION['password'] = $password;
-                    $_SESSION['phone'] = $phone;
-                    $_SESSION['country'] = $country;
-                    $_SESSION['balance'] = $balance;
-                    $_SESSION['username	'] = $username;
+                    $_SESSION['user_id'] = $user_id;
                     header("Location:user-dashbord");
                } else {
                     $_SESSION['error'] = 1;
@@ -107,7 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           };
      } else {
           //return errors
-
+     
           print('<script>
      document.addEventListener("DOMContentLoaded", function(){
           showErrors(' . json_encode($myForm->getErrors()) . ');

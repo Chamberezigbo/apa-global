@@ -16,10 +16,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           $_SESSION['start'] = time();
           $_SESSION['expire'] = $_SESSION['start'] + (40 * 60);
           print('<script>
-               toastr.success("You have been loged in as APA Admin");
+                document.addEventListener("DOMContentLoaded", function() {
+                     toastr.success("You have been loged in as APA Admin");
+                    })
           </script>');
           //? need to change the rediraction // 
-          header("Location:admin-dashboard/index.php");
+          header("Location:../admin/");
           exit();
      } else {
           // $sql = "SELECT * FROM users WHERE username = '$email' OR email = '$email'";
@@ -28,25 +30,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           if (($result)) {
                if ($result['is_activated'] == 'no') {
                     print('<script>
-                         toastr.denger("Something went wrong contact the Customer care");
+                    document.addEventListener("DOMContentLoaded", function() {
+                         toastr.error("Something went wrong contact the Customer care");
+                         toastr.clear()
+                    })
                     </script>');
                } else {
-                    if (password_verify($password, $result['password'])) {
+                    if ($password == $result['password']) {
                          // $sql = "UPDATE  users SET lastSeen = '$fullDate'  WHERE email= '$email'";
                          // $resultSeen = mysqli_query($conn, $sql);
                          // if ($resultSeen) {
                          $_SESSION['auth'] = true;
                          $_SESSION['start'] = time();
                          $_SESSION['expire'] = $_SESSION['start'] + (40 * 60);
-                         $_SESSION['sessionId'] = $result['id'];
-                         $_SESSION['email'] = $result['email'];
-                         $_SESSION['username'] = $result['username'];
-                         $_SESSION['balance'] =  $result['balance'];
+                         $_SESSION["user_id"] = $result['user_id'];
                          //? $_SESSION['balance'] =  $result['bonus_balance'];//
                          //? $_SESSION['balance'] =  $result['referal_balance'];//
                          print('<script>
-                                   toastr.success("Welcome youve been login");
-                              </script>');
+                               document.addEventListener("DOMContentLoaded", function() {
+                              toastr.success("Welcome youve been login");
+                              })
+                         </script>');
                          header("Location:index.php");
                          exit();
                          // } else {
@@ -57,19 +61,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                          // }
                     } else {
                          print('<script>
-                              toastr.denger("Wrong password");
+                               document.addEventListener("DOMContentLoaded", function() {
+                                   toastr.error("Wrong password");
+                                   toastr.clear()
+                              })
                          </script>');
                     }
                }
           } else {
                print('<script>
-                    toastr.denger("Wrong password");
+                     document.addEventListener("DOMContentLoaded", function() {
+                         toastr.error("Wrong password");
+                         setTimeout(function() {
+                              toastr.clear()
+                         }, 3000);
+                         
+                    })
                </script>');
           }
      }
 }
 ?>
-
 <!DOCTYPE html>
 <html>
 
@@ -90,6 +102,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
      <link rel="stylesheet" href="css/custom.css">
      <!-- Favicon-->
      <link rel="shortcut icon" href="img/favicon.ico">
+     <script src="js/jquerry.3.6.js"></script>
+     <link rel="stylesheet" href="../assets/toastr-master/build/toastr.min.css">
      <!-- Tweaks for older IEs-->
      <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -139,6 +153,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
      <script src="vendor/choices.js/public/assets/scripts/choices.min.js"></script>
      <!-- Main File-->
      <script src="js/front.js"></script>
+     <script src="../assets/toastr-master/build/toastr.min.js"></script>
      <script>
           // ------------------------------------------------------- //
           //   Inject SVG Sprite - 

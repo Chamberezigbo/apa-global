@@ -59,7 +59,7 @@
                                         <input type="number" class="form-control" id="formGroupExampleInput" placeholder="$5,000">
                                    </div>
                                    <div class="d-grid gap-2">
-                                        <button class="btn btn-primary" type="button">Join Plan</button>
+                                        <button class="btn btn-primary" type="button"><a class="text-light" href="deposit.php">Join Plan</a></button>
                                    </div>
                               </div>
                          </div>
@@ -110,7 +110,7 @@
                                         <input type="number" class="form-control" id="formGroupExampleInput" placeholder="$100,000">
                                    </div>
                                    <div class="d-grid gap-2">
-                                        <button class="btn btn-primary" type="button">Join Plan</button>
+                                        <button class="btn btn-primary" type="button"><a class="text-light" href="deposit.php">Join Plan</a></button>
                                    </div>
                               </div>
                          </div>
@@ -162,7 +162,7 @@
                                         <input type="number" class="form-control" id="formGroupExampleInput" placeholder="$500,000">
                                    </div>
                                    <div class="d-grid gap-2">
-                                        <button class="btn btn-primary" type="button">Join Plan</button>
+                                        <button class="btn btn-primary" type="button"><a class="text-light" href="deposit.php">Join Plan</a></button>
                                    </div>
                               </div>
                          </div>
@@ -214,7 +214,7 @@
                                         <input type="number" class="form-control" id="formGroupExampleInput" placeholder="$105,000">
                                    </div>
                                    <div class="d-grid gap-2">
-                                        <button class="btn btn-primary" type="button">Join Plan</button>
+                                        <button class="btn btn-primary" type="button"><a class="text-light" href="deposit.php">Join Plan</a></button>
                                    </div>
                               </div>
                          </div>

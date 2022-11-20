@@ -37,6 +37,21 @@
                document.body.insertBefore(div, document.body.childNodes[0]);
           }
      }
+
+     function myFunction() {
+          // Get the text field
+          var copyText = document.getElementById("myInput");
+
+          // Select the text field
+          copyText.select();
+          copyText.setSelectionRange(0, 99999); // For mobile devices
+
+          // Copy the text inside the text field
+          navigator.clipboard.writeText(copyText.value);
+
+          // // Alert the copied text
+          // alert("Copied the text: " + copyText.value);
+     }
      // this is set to BootstrapTemple website as you cannot 
      // inject local SVG sprite (using only 'icons/orion-svg-sprite.svg' path)
      // while using file:// protocol

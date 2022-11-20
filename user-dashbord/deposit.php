@@ -1,4 +1,29 @@
-<?php require "header.php" ?>
+<?php
+require "header.php";
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+     $paymentMode = $_POST['paymentMode'];
+     $amount = $_POST['amount'];
+     $result = $db->SelectOne("SELECT * FROM payment_methods WHERE method = :method", ['method' => $paymentMode]);
+     if ($result) {
+          $_SESSION["addr"] = $result['addr'];
+          $_SESSION['paymentAmount'] = $amount;
+          $_SESSION['paymentMode'] = $paymentMode;
+          echo "<script>window.location.href='payment.php';</script>";
+          exit;
+     } else {
+          print('<script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                    toastr.error("Oops! Something went wrong try another payment method. Please try again");
+                    setTimeout(function() {
+                              toastr.clear()
+                         }, 5000);
+                         })
+               </script>');
+     }
+}
+
+?>
+
 <div class="content-inner w-100">
      <!-- Page Header-->
      <header class="bg-white shadow-sm px-4 py-3 z-index-20">
@@ -25,12 +50,21 @@
                          <div class="row">
                               <div class="col-md-8">
 
-                                   <form action="javascript:;" method="post" id="submitpaymentform">
+                                   <form action="" method="post" id="submitpaymentform">
                                         <input type="hidden" name="_token" value="VwJXSdV5Py8OIzWjZnjqdOUj6MXszJxbjQZCUJJF">
                                         <div class="row">
                                              <div class="mb-4 col-md-12">
                                                   <h5 class="card-title text-dark">Enter Amount</h5>
-                                                  <input class="form-control text-dark bg-light" placeholder="Enter Amount" type="number" name="amount" required="">
+                                                  <input class="form-control text-dark bg-light" placeholder="Enter Amount" type="number" name="amount" required>
+                                             </div>
+                                             <div class="mb-4 col-md-12">
+                                                  <select class="form-select" name="paymentMode" id="floatingSelect" aria-label="Floating label select example">
+                                                       <option selected>USDT</option>
+                                                       <option>BTC</option>
+                                                       <option>Doge</option>
+                                                       <option>Ethereum</option>
+                                                  </select>
+                                                  <label for="floatingSelect">select a payment methode</label>
                                              </div>
                                              <div class="col-md-6">
                                                   <div class="card">
@@ -96,7 +130,9 @@
                                                        </div>
                                                   </div>
                                              </div>
-
+                                             <div class="d-grid gap-2">
+                                                  <button class="btn btn-primary" type="submit"><a class="text-light" href="">Containue</a></button>
+                                             </div>
                                         </div>
                                    </form>
                               </div>

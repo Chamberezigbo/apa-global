@@ -27,7 +27,7 @@ require_once "header.php";
                                         <div class="mx-3">
                                              <h6 class="h4 fw-light text-gray-600 mb-3">Account Balance</h6>
                                         </div>
-                                        <div class="number"><strong class="text-lg">$0</strong></div>
+                                        <div class="number"><strong class="text-lg">$<?= $balance ?></strong></div>
                                    </div>
                               </div>
                               <!-- Item -->
@@ -44,7 +44,7 @@ require_once "header.php";
                                         <div class="mx-3">
                                              <h6 class="h4 fw-light text-gray-600 mb-3">Total <br> Balance</h6>
                                         </div>
-                                        <div class="number"><strong class="text-lg">$0</strong></div>
+                                        <div class="number"><strong class="text-lg">$ <?= $balance ?></strong></div>
                                    </div>
                               </div>
                               <!-- Item -->
@@ -58,7 +58,7 @@ require_once "header.php";
                                         <div class="mx-3">
                                              <h6 class="h4 fw-light text-gray-600 mb-3">Total <br>Bonus</h6>
                                         </div>
-                                        <div class="number"><strong class="text-lg">$0</strong></div>
+                                        <div class="number"><strong class="text-lg">$ <?= $bonus ?></strong></div>
                                    </div>
                               </div>
                               <!-- Item -->
@@ -72,7 +72,7 @@ require_once "header.php";
                                         <div class="mx-3">
                                              <h6 class="h4 fw-light text-gray-600 mb-3">Total <br> Referral Bonus</h6>
                                         </div>
-                                        <div class="number"><strong class="text-lg">$0</strong></div>
+                                        <div class="number"><strong class="text-lg">$ <?= $bonus ?></strong></div>
                                    </div>
                               </div>
                          </div>
@@ -90,7 +90,7 @@ require_once "header.php";
                               <div class="card-body">
                                    <div class="d-flex align-items-center">
                                         <div class="icon flex-shrink-0 bg-red"><i class="fas fa-tasks"></i></div>
-                                        <div class="ms-3"><strong class="text-lg d-block lh-1 mb-1">$0</strong><small class="text-uppercase text-gray-500 small d-block lh-1">Total Investment Plans</small></div>
+                                        <div class="ms-3"><strong class="text-lg d-block lh-1 mb-1">$ <?= $totalAccountPlan ?></strong><small class="text-uppercase text-gray-500 small d-block lh-1">Total Investment Plans</small></div>
                                    </div>
                               </div>
                          </div>
@@ -102,7 +102,7 @@ require_once "header.php";
                                                   <path d="M1.5 15a.5.5 0 0 0 0 1h13a.5.5 0 0 0 0-1H13V2.5A1.5 1.5 0 0 0 11.5 1H11V.5a.5.5 0 0 0-.57-.495l-7 1A.5.5 0 0 0 3 1.5V15H1.5zM11 2h.5a.5.5 0 0 1 .5.5V15h-1V2zm-2.5 8c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1z" />
                                              </svg>
                                         </div>
-                                        <div class="ms-3"><strong class="text-lg d-block lh-1 mb-1">$0</strong><small class="text-uppercase text-gray-500 small d-block lh-1">Total Active Investment Plans</small></div>
+                                        <div class="ms-3"><strong class="text-lg d-block lh-1 mb-1">$ <?= $totalInvestment ?></strong><small class="text-uppercase text-gray-500 small d-block lh-1">Total Active Investment Plans</small></div>
                                    </div>
                               </div>
                          </div>
@@ -110,7 +110,7 @@ require_once "header.php";
                               <div class="card-body">
                                    <div class="d-flex align-items-center">
                                         <div class="icon flex-shrink-0 bg-orange"><i class="fa-solid fa-money-bill-transfer"></i></div>
-                                        <div class="ms-3"><strong class="text-lg d-block lh-1 mb-1">$0</strong><small class="text-uppercase text-gray-500 small d-block lh-1">Total Deposit</small></div>
+                                        <div class="ms-3"><strong class="text-lg d-block lh-1 mb-1">$ <?= $totalDeposit ?></strong><small class="text-uppercase text-gray-500 small d-block lh-1">Total Deposit</small></div>
                                    </div>
                               </div>
                          </div>
@@ -192,7 +192,7 @@ require_once "header.php";
                               <div class="card-body">
                                    <div class="d-flex align-items-center">
                                         <div class="icon flex-shrink-0 bg-green"><i class="fas fa-chart-area"></i></div>
-                                        <div class="ms-3"><strong class="text-lg mb-0 d-block lh-1">$0</strong><small class="text-gray-500 small text-uppercase">Total Withdrawals</small></div>
+                                        <div class="ms-3"><strong class="text-lg mb-0 d-block lh-1">$ <?= $totalWithdraws ?></strong><small class="text-gray-500 small text-uppercase">Total Withdrawals</small></div>
                                    </div>
                               </div>
                          </div>

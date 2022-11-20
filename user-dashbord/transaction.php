@@ -50,31 +50,26 @@
                                              <table class="table mb-0">
                                                   <thead>
                                                        <tr>
-                                                            <th>#</th>
-                                                            <th>First Name</th>
-                                                            <th>Last Name</th>
-                                                            <th>Username</th>
+                                                            <th>Amount</th>
+                                                            <th>Payment mode</th>
+                                                            <th>Status</th>
+                                                            <th>Date Created</th>
                                                        </tr>
                                                   </thead>
                                                   <tbody>
-                                                       <tr>
-                                                            <th scope="row">1</th>
-                                                            <td>Mark</td>
-                                                            <td>Otto</td>
-                                                            <td>@mdo</td>
-                                                       </tr>
-                                                       <tr>
-                                                            <th scope="row">2</th>
-                                                            <td>Jacob</td>
-                                                            <td>Thornton</td>
-                                                            <td>@fat</td>
-                                                       </tr>
-                                                       <tr>
-                                                            <th class="border-bottom-0" scope="row">3</th>
-                                                            <td class="border-bottom-0">Larry</td>
-                                                            <td class="border-bottom-0">the Bird</td>
-                                                            <td class="border-bottom-0">@twitter</td>
-                                                       </tr>
+                                                       <?php
+                                                       $result = $db->SelectAll("SELECT * FROM deposit WHERE user_id = :userId", ['userId' => $user_Id]);
+                                                       if ($result) {
+                                                       ?>
+                                                            <tr>
+                                                                 <th><?= $result['amount'] ?></th>
+                                                                 <td><?= $result['payment_mode'] ?></td>
+                                                                 <td><?= $result['status'] ?></td>
+                                                                 <td><?= $result['date'] ?></td>
+                                                            </tr>
+                                                       <?php
+                                                       }
+                                                       ?>
                                                   </tbody>
                                              </table>
                                         </div>
@@ -106,24 +101,19 @@
                                                        </tr>
                                                   </thead>
                                                   <tbody>
-                                                       <tr>
-                                                            <th scope="row">1</th>
-                                                            <td>Mark</td>
-                                                            <td>Otto</td>
-                                                            <td>@mdo</td>
-                                                       </tr>
-                                                       <tr>
-                                                            <th scope="row">2</th>
-                                                            <td>Jacob</td>
-                                                            <td>Thornton</td>
-                                                            <td>@fat</td>
-                                                       </tr>
-                                                       <tr>
-                                                            <th class="border-bottom-0" scope="row">3</th>
-                                                            <td class="border-bottom-0">Larry</td>
-                                                            <td class="border-bottom-0">the Bird</td>
-                                                            <td class="border-bottom-0">@twitter</td>
-                                                       </tr>
+                                                       <?php
+                                                       $result = $db->SelectAll("SELECT * FROM deposit WHERE user_id = :userId", ['userId' => $user_Id]);
+                                                       if ($result) {
+                                                       ?>
+                                                            <tr>
+                                                                 <th><?= $result['amount'] ?></th>
+                                                                 <td><?= $result['payment_mode'] ?></td>
+                                                                 <td><?= $result['status'] ?></td>
+                                                                 <td><?= $result['date'] ?></td>
+                                                            </tr>
+                                                       <?php
+                                                       }
+                                                       ?>
                                                   </tbody>
                                              </table>
                                         </div>
@@ -148,30 +138,18 @@
                                              <table class="table mb-0">
                                                   <thead>
                                                        <tr>
-                                                            <th>#</th>
-                                                            <th>First Name</th>
-                                                            <th>Last Name</th>
-                                                            <th>Username</th>
+                                                            <th>Amount</th>
+                                                            <th>Type</th>
+                                                            <th>Plan/Nirration</th>
+                                                            <th>Date</th>
                                                        </tr>
                                                   </thead>
                                                   <tbody>
                                                        <tr>
-                                                            <th scope="row">1</th>
-                                                            <td>Mark</td>
-                                                            <td>Otto</td>
-                                                            <td>@mdo</td>
-                                                       </tr>
-                                                       <tr>
-                                                            <th scope="row">2</th>
-                                                            <td>Jacob</td>
-                                                            <td>Thornton</td>
-                                                            <td>@fat</td>
-                                                       </tr>
-                                                       <tr>
-                                                            <th class="border-bottom-0" scope="row">3</th>
-                                                            <td class="border-bottom-0">Larry</td>
-                                                            <td class="border-bottom-0">the Bird</td>
-                                                            <td class="border-bottom-0">@twitter</td>
+                                                            <th>$<?= $bonus ?></th>
+                                                            <td>Bonus</td>
+                                                            <td>Signup Bonus</td>
+                                                            <td>Thu, Nov 17, 2022 12:41 PM</td>
                                                        </tr>
                                                   </tbody>
                                              </table>

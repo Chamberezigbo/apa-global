@@ -28,7 +28,7 @@
                     <!-- Basic Form-->
                     <div class="col-md-12 text-center">
                          <strong>Your Referral ID</strong><br>
-                         <h4 style="color:green;"> chamberezigbo</h4> <br>
+                         <h4 style="color:green;"><?= $username ?></h4> <br>
                          <h3 class="title1">
                               <small>You were referred by</small><br>
                               <i class="fa fa-user fa-2x"></i><br>
