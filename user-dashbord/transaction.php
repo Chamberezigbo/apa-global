@@ -58,8 +58,9 @@
                                                   </thead>
                                                   <tbody>
                                                        <?php
-                                                       $result = $db->SelectAll("SELECT * FROM deposit WHERE user_id = :userId", ['userId' => $user_Id]);
-                                                       if ($result) {
+                                                       $results = $db->SelectAll("SELECT * FROM deposit WHERE user_id = :userId", ['userId' => $user_Id]);
+                                                       if ($results && count($results)) {
+                                                            foreach($results as $i => $result){
                                                        ?>
                                                             <tr>
                                                                  <th><?= $result['amount'] ?></th>
@@ -69,6 +70,7 @@
                                                             </tr>
                                                        <?php
                                                        }
+                                                  }
                                                        ?>
                                                   </tbody>
                                              </table>
@@ -102,8 +104,9 @@
                                                   </thead>
                                                   <tbody>
                                                        <?php
-                                                       $result = $db->SelectAll("SELECT * FROM deposit WHERE user_id = :userId", ['userId' => $user_Id]);
-                                                       if ($result) {
+                                                       $results = $db->SelectAll("SELECT * FROM deposit WHERE user_id = :userId", ['userId' => $user_Id]);
+                                                       if ($results && count($results)) {
+                                                            foreach($results as $i => $result){
                                                        ?>
                                                             <tr>
                                                                  <th><?= $result['amount'] ?></th>
@@ -113,6 +116,7 @@
                                                             </tr>
                                                        <?php
                                                        }
+                                                  }
                                                        ?>
                                                   </tbody>
                                              </table>
