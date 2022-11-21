@@ -18,6 +18,8 @@
 <!-- Main File-->
 <script src="js/front.js"></script>
 <script src="../assets/toastr-master/build/toastr.min.js"></script>
+<!-- Place this script before the </head> tag -->
+<script src="https://unpkg.com/octavalidate@1.2.5/native/validate.js"></script>
 
 <script>
      // ------------------------------------------------------- //

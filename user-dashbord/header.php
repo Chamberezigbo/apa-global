@@ -177,7 +177,7 @@ if (!$_SESSION['auth']) {
                                              <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
                                                   <use xlink:href="#chart-1"> </use>
                                              </svg>Withdraw Funds</a></li>
-                                   <li class="sidebar-item"> <a class="sidebar-link" href="">
+                                   <li class="sidebar-item"> <a class="sidebar-link" href="profile.php">
                                              <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
                                                   <use xlink:href="#quality-1"> </use>
                                              </svg>Account Settings</a></li>

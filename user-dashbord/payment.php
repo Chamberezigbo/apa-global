@@ -1,108 +1,110 @@
 <?php
 require "header.php";
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-     //? file upload code //
-     $target_dir = "uploads/";
-     $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-     $uploadOk = 1;
-     $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-     // Check if image file is a actual image or fake image
-     $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay'])) {
+     // //? file upload code //
+     // $target_dir = "uploads/";
+     // $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+     // $uploadOk = 1;
+     // $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+     // // Check if image file is a actual image or fake image
+     // $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
 
-     if ($check === false) {
-          print('<script>
-                    document.addEventListener("DOMContentLoaded", function() {
-                    toastr.error("Oops! Something went wrong try another payment method. Please try again");
-                    setTimeout(function() {
-                              toastr.clear()
-                         }, 5000);
-                         })
-               </script>');
-          $_SESSION['error'] = 1;
-          $_SESSION['errorMassage'] = "file is not an image";
-          $uploadOk = 0;
-     }
+     // if ($check === false) {
+     //      print('<script>
+     //                document.addEventListener("DOMContentLoaded", function() {
+     //                toastr.error("Oops! Something went wrong try another payment method. Please try again");
+     //                setTimeout(function() {
+     //                          toastr.clear()
+     //                     }, 5000);
+     //                     })
+     //           </script>');
+     //      $_SESSION['error'] = 1;
+     //      $_SESSION['errorMassage'] = "file is not an image";
+     //      $uploadOk = 0;
+     // }
 
-     // Check if file already exists
-     if (file_exists($target_file)) {
-          print('<script>
-                    document.addEventListener("DOMContentLoaded", function() {
-                    toastr.error("Sorry, file already exists.");
-                    setTimeout(function() {
-                              toastr.clear()
-                         }, 5000);
-                         })
-          </script>');
-          $uploadOk = 0;
-     }
+     // // Check if file already exists
+     // if (file_exists($target_file)) {
+     //      print('<script>
+     //                document.addEventListener("DOMContentLoaded", function() {
+     //                toastr.error("Sorry, file already exists.");
+     //                setTimeout(function() {
+     //                          toastr.clear()
+     //                     }, 5000);
+     //                     })
+     //      </script>');
+     //      $uploadOk = 0;
+     // }
 
-     // Check file size
-     if ($_FILES["fileToUpload"]["size"] > 10000000) {
-          print('<script>
-                    document.addEventListener("DOMContentLoaded", function() {
-                    toastr.error("Sorry, your file is too large.");
-                    setTimeout(function() {
-                              toastr.clear()
-                         }, 5000);
-                         })
-               </script>');
-          $uploadOk = 0;
-     }
+     // // Check file size
+     // if ($_FILES["fileToUpload"]["size"] > 10000000) {
+     //      print('<script>
+     //                document.addEventListener("DOMContentLoaded", function() {
+     //                toastr.error("Sorry, your file is too large.");
+     //                setTimeout(function() {
+     //                          toastr.clear()
+     //                     }, 5000);
+     //                     })
+     //           </script>');
+     //      $uploadOk = 0;
+     // }
 
-     // Allow certain file formats
-     if (
-          $imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-          && $imageFileType != "gif"
-     ) {
-          print('<script>
-                    document.addEventListener("DOMContentLoaded", function() {
-                    toastr.error("Sorry, only JPG, JPEG, PNG & GIF files are allowed");
-                    setTimeout(function() {
-                              toastr.clear()
-                         }, 5000);
-                         })
-               </script>');
-          $uploadOk = 0;
-     }
-     // Check if $uploadOk is set to 0 by an error
-     if ($uploadOk == 0) {
-          print('<script>
-                    document.addEventListener("DOMContentLoaded", function() {
-                    toastr.error("Sorry, some files were not uploaded, try again.");
-                    setTimeout(function() {
-                              toastr.clear()
-                         }, 5000);
-                         })
-               </script>');
-          // if everything is ok, try to upload file
-     } else {
-          $user_id = $_SESSION['user_id'];
-          $amount = $_SESSION['amount'];
-          $paymentMode = $_SESSION['payment_mode'];
-          $date = time();
-          move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file);
-          $query = "INSERT INTO deposit (user_id,amount,payment_mode,date,prof_image)
-          VALUES(:user_id, :amount, :payment_mode,:date,prof_image)";
-          $data = [
-               'user_id' => $user_id,
-               'amount' => $amount,
-               'payment_mode' => $paymentMode,
-               'date' => $date,
-               'prof_image' => $target_file
-          ];
-
-          $result = $db->Insert($query, $data);
-          if ($result) {
-               print("<script>
+     // // Allow certain file formats
+     // if (
+     //      $imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+     //      && $imageFileType != "gif"
+     // ) {
+     //      print('<script>
+     //                document.addEventListener("DOMContentLoaded", function() {
+     //                toastr.error("Sorry, only JPG, JPEG, PNG & GIF files are allowed");
+     //                setTimeout(function() {
+     //                          toastr.clear()
+     //                     }, 5000);
+     //                     })
+     //           </script>');
+     //      $uploadOk = 0;
+     // }
+     // // Check if $uploadOk is set to 0 by an error
+     // if ($uploadOk == 0) {
+     //      print('<script>
+     //                document.addEventListener("DOMContentLoaded", function() {
+     //                toastr.error("Sorry, some files were not uploaded, try again.");
+     //                setTimeout(function() {
+     //                          toastr.clear()
+     //                     }, 5000);
+     //                     })
+     //           </script>');
+     //      // if everything is ok, try to upload file
+     // } else {
+     $amount = $_SESSION['paymentAmount'];
+     $paymentMode = $_SESSION['paymentMode'];
+     $date = time();
+     // move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file);
+     $query =
+          "INSERT INTO deposit (user_id,amount,payment_mode,date,prof_image)
+          VALUES(:user_id, :amount, :payment_mode,:date)";
+     $data = [
+          'user_id' => $user_id,
+          'amount' => $amount,
+          'payment_mode' => $paymentMode,
+          'date' => $date,
+          // 'prof_image' => $target_file
+     ];
+     $result = $db->Insert($query, $data);
+     if ($result) {
+          print("<script>
                     document.addEventListener('DOMContentLoaded', function() {
                     toastr.success('file uploaded successfully');
                     setTimeout(function() {
                               toastr.clear()
-                              window.location.href='index.php';
                          }, 5000);
+                         window.location.href='index.php';
                          })
                </script>");
-          }
+          exit();
+     } else {
+          echo "not found";
+          die();
      }
 }
 
@@ -162,15 +164,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                              <div>
                                                   <form method="post" action="" enctype="multipart/form-data">
                                                        <input type="hidden" name="_token" value="ZMgLCOo8sn0IbSt2nmwl672ocebXqh07tATgpH7u">
-                                                       <div class="form-group">
+                                                       <!-- <div class="form-group">
                                                             <h5 class="text-dark">Upload Payment proof after payment.</h5>
                                                             <input type="file" name="fileToUpload" class="form-control col-lg-4 bg-light text-dark" required="">
-                                                       </div>
+                                                       </div> -->
                                                        <input type="hidden" name="amount" value="300">
                                                        <input type="hidden" name="paymethd_method" value="Doge">
 
                                                        <div class="form-group mt-5">
-                                                            <input type="submit" class="btn btn-dark" value="Submit Payment">
+                                                            <input type="submit" name="pay" class="btn btn-dark" value="Done Paying">
                                                        </div>
                                                   </form>
                                              </div>

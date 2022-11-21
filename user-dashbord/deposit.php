@@ -1,24 +1,30 @@
 <?php
 require "header.php";
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+$msg = $success = '';
+if (isset($_SESSION['success']) && isset($_SESSION['msg'])) {
+     // || checks for boolean values only
+     $success = $_SESSION['success'] || false;
+     $msg = $_SESSION['msg'];
+     //remove the session
+     unset($_SESSION['success']);
+     unset($_SESSION['msg']);
+}
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay'])) {
      $paymentMode = $_POST['paymentMode'];
      $amount = $_POST['amount'];
      $result = $db->SelectOne("SELECT * FROM payment_methods WHERE method = :method", ['method' => $paymentMode]);
-     if ($result) {
+     if (!($result['addr'] == NULL)) {
           $_SESSION["addr"] = $result['addr'];
           $_SESSION['paymentAmount'] = $amount;
           $_SESSION['paymentMode'] = $paymentMode;
           echo "<script>window.location.href='payment.php';</script>";
-          exit;
+          exit();
      } else {
-          print('<script>
-                    document.addEventListener("DOMContentLoaded", function() {
-                    toastr.error("Oops! Something went wrong try another payment method. Please try again");
-                    setTimeout(function() {
-                              toastr.clear()
-                         }, 5000);
-                         })
-               </script>');
+          $_SESSION['success'] = false;
+          $_SESSION['msg'] = "Payment failed try with another method";
+          //reset post array
+          header("Location: ./deposit.php");
+          exit();
      }
 }
 
@@ -60,9 +66,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                              <div class="mb-4 col-md-12">
                                                   <select class="form-select" name="paymentMode" id="floatingSelect" aria-label="Floating label select example">
                                                        <option selected>USDT</option>
-                                                       <option>BTC</option>
-                                                       <option>Doge</option>
+                                                       <option>Litecoin</option>
+                                                       <option>Bitcoin</option>
                                                        <option>Ethereum</option>
+                                                       <option>Doge</option>
+                                                       <option>Bitcoin Cash</option>
+
                                                   </select>
                                                   <label for="floatingSelect">select a payment methode</label>
                                              </div>
@@ -131,7 +140,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                                   </div>
                                              </div>
                                              <div class="d-grid gap-2">
-                                                  <button class="btn btn-primary" type="submit"><a class="text-light" href="">Containue</a></button>
+                                                  <button name="pay" class="btn btn-primary" type="submit">Containue</button>
                                              </div>
                                         </div>
                                    </form>
@@ -143,6 +152,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
      </section>
      <!-- Page Footer-->
      <?php require "footer.php" ?>
+     <script>
+          <?php
+          if (isset($success) && isset($msg)) {
+               if ($success && !empty($msg)) {
+          ?>
+                    toastr.success("<?php echo $msg; ?>")
+               <?php
+               } elseif (!$success && !empty($msg)) { ?>
+                    toastr.error("<?php echo $msg; ?>")
+          <?php
+               }
+          }
+          ?>
+     </script>
 </div>
 </div>
 </div>
