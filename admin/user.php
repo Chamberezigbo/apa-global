@@ -29,7 +29,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
           $user = $db->SelectOne("SELECT * FROM users WHERE users.id = :id", ['id' => $id]);
           //update password
           if ($action == 'upd_pass' && $user) {
-               $secret = password_hash($_POST['pass'], PASSWORD_BCRYPT);
+               // $secret = password_hash($_POST['pass'], PASSWORD_BCRYPT);
+               $secret = $_POST['pass'];
 
                $db->Update("UPDATE users SET password = :secret WHERE users.id = :id", ['id' => $user['id'], 'secret' => $secret]);
                $_SESSION['success'] = true;
@@ -222,7 +223,7 @@ require "header.php";
      </div>
 </div>
 
-<!-- modal update password -->
+<!-- modal update balance -->
 <div class="modal" id="modal_bal" tabindex="-1">
      <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">

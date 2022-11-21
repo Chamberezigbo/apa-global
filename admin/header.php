@@ -87,7 +87,7 @@
                                         </ul>
                                    </li>
                                    <!-- Logout    -->
-                                   <li class="nav-item"><a class="nav-link text-white" href="login.php"> <span class="d-none d-sm-inline">Logout</span>
+                                   <li class="nav-item"><a class="nav-link text-white" href="logout.php"> <span class="d-none d-sm-inline">Logout</span>
                                              <svg class="svg-icon svg-icon-xs svg-icon-heavy">
                                                   <use xlink:href="#security-1"> </use>
                                              </svg></a></li>

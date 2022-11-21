@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                $_SESSION['success'] = true;
                $_SESSION['msg'] = "Address has been updated successfully";
                //reset post array
-               header("Location: ./payment-methods");
+               header("Location: ./payment-methods.php");
                exit();
           }
      }

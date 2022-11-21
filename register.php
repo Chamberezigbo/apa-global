@@ -7,9 +7,6 @@ use Validate\octaValidate;
 
 $db = new DatabaseClass();
 
-
-
-
 //set configuration
 $options = array(
      "stripTags" => true,
