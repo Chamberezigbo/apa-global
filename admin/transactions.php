@@ -116,25 +116,34 @@ require 'header.php';
                                         if (!$deposits) {
                                         ?>
                                              <td colspan="5" class="text-center">
-                                                  <span class="text-danger">No deposit</span>
+                                                  <span class="text-danger">No Deposits</span>
                                              </td>
                                         <?php
                                         }
                                         foreach ($deposits as $i => $deposit) {
                                         ?>
                                              <tr>
-                                                  <td><?php echo ($deposit['amount']); ?></td>
-                                                  <td><?php echo ($deposit['payment_mode']); ?> </td>
-                                                  <td><?php echo ($deposit['status']); ?></td>
-                                                  <td><?php echo ($deposit['date']); ?></td>
+                                                  <td>
+                                                       <?php echo ($deposit['amount']); ?>
+                                                  </td>
+                                                  <td>
+                                                       <?php echo ($deposit['payment_mode']); ?>
+                                                  </td>
+                                                  <td>
+                                                       <?php echo ($deposit['status']); ?>
+                                                  </td>
+                                                  <td>
+                                                       <?php echo (date('D m M, Y', $deposit['date'])); ?>
+                                                  </td>
                                                   <td class="text-center">
-                                                       <form method="post" class="d-inline me-3">
+                                                       <button data-proof-image="<?php echo $deposit['prof_image']; ?>" class="btn btn-info btn-view-proof me-2">View proof</button>
+                                                       <form method="post" class="d-inline me-2" onsubmit="return confirm('Are you sure you want to confirm this transaction?')">
                                                             <input type="hidden" name="action" value="confirm_deposit" />
                                                             <input type="hidden" name="trans_action" value="1" />
                                                             <input type="hidden" name="trans_id" value="<?php echo $deposit['id']; ?>" />
                                                             <button class="btn btn-success">Confirm</button>
                                                        </form>
-                                                       <form method="post" class="d-inline">
+                                                       <form method="post" class="d-inline" onsubmit="return confirm('Are you sure you want to reject this transaction?')">
                                                             <input type="hidden" name="action" value="confirm_deposit" />
                                                             <input type="hidden" name="trans_action" value="0" />
                                                             <input type="hidden" name="trans_id" value="<?php echo $deposit['id']; ?>" />
@@ -163,26 +172,38 @@ require 'header.php';
                                         if (!$withdrawals) {
                                         ?>
                                              <td colspan="5" class="text-center">
-                                                  <span class="text-danger">No deposit</span>
+                                                  <span class="text-danger">No Withdrawals</span>
                                              </td>
                                         <?php
                                         }
                                         foreach ($withdrawals as $i => $withdrawal) {
                                         ?>
                                              <tr>
-                                                  <td><?php echo ($withdrawal['amount']); ?></td>
-                                                  <td><?php echo ($withdrawal['charges']); ?> </td>
-                                                  <td><?php echo ($withdrawal['receive_mode']); ?></td>
-                                                  <td><?php echo ($withdrawal['status']); ?></td>
-                                                  <td><?php echo ($withdrawal['date']); ?></td>
+                                                  <td>
+                                                       <?php echo ($withdrawal['amount']); ?>
+                                                  </td>
+                                                  <td>
+                                                       <?php echo ($withdrawal['charges']); ?>
+                                                  </td>
+                                                  <td>
+                                                       <?php echo ($withdrawal['receive_mode']); ?>
+                                                  </td>
+                                                  <td>
+                                                       <?php echo ($withdrawal['status']); ?>
+                                                  </td>
+                                                  <td>
+                                                       <?php echo ($withdrawal['date']); ?>
+                                                  </td>
                                                   <td class="text-center">
-                                                       <form method="post" class="d-inline me-3">
+                                                       <button data-proof-img="<?php echo $deposit['prof_image']; ?>" class="btn btn-info btn-view-proof me-2">View
+                                                            proof</button>
+                                                       <form method="post" class="d-inline me-2" onsubmit="return confirm('Are you sure you want to confirm this transaction?')">
                                                             <input type="hidden" name="action" value="confirm_withdrawal" />
                                                             <input type="hidden" name="trans_action" value="1" />
                                                             <input type="hidden" name="trans_id" value="<?php echo $deposit['id']; ?>" />
                                                             <button class="btn btn-success">Confirm</button>
                                                        </form>
-                                                       <form method="post" class="d-inline">
+                                                       <form method="post" class="d-inline" onsubmit="return confirm('Are you sure you want to reject this transaction?')">
                                                             <input type="hidden" name="action" value="confirm_withdrawal" />
                                                             <input type="hidden" name="trans_action" value="0" />
                                                             <input type="hidden" name="trans_id" value="<?php echo $deposit['id']; ?>" />
@@ -224,20 +245,19 @@ require 'header.php';
 </div>
 </div>
 </div>
-<!-- modal update password -->
-<div class="modal" id="modal_bal" tabindex="-1">
+<!-- modal view proof-->
+<div class="modal" id="modal_view_proof" tabindex="-1">
      <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
                <div class="modal-header">
-                    <h5 class="modal-title">Update Balance</h5>
+                    <h5 class="modal-title">Proof of payment</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                </div>
                <div class="modal-body">
 
                </div>
                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button form="form_upd_bal" class="btn btn-success">Update</button>
+                    <button type="button" class="btn btn-outline-info" data-bs-dismiss="modal">Thank you</button>
                </div>
           </div>
      </div>
@@ -278,21 +298,26 @@ require 'header.php';
 <script src="./toastr/toastr.min.js"> </script>
 <script>
      document.addEventListener('DOMContentLoaded', function() {
-          $('#btn_upd_pwd').on('click', function() {
-               //show the modal
-               new bootstrap.Modal('#modal_pwd').show()
-          })
-          $('#btn_upd_bal').on('click', function() {
-               //show the modal
-               new bootstrap.Modal('#modal_bal').show()
-          })
-
-          const myForm = new octaValidate('form_upd_pass')
-          $('#form_upd_pass').on('submit', (e) => {
-               e.preventDefault()
-               if (myForm.validate()) {
-                    e.currentTarget.submit()
-               }
+          //destructure array
+          $('.btn-view-proof') && [...$('.btn-view-proof')].forEach(el => {
+               $(el).on('click', function() {
+                    //show the modal
+                    new bootstrap.Modal('#modal_view_proof').show();
+                    if (!this.getAttribute("data-proof-image")) {
+                         $('#modal_view_proof .modal-body').html(`
+                         <div class="alert alert-info p-3 text-center">
+                              <p class="m-0">This user has not uploaded a <b>proof of payment</b></p>
+                         </div>
+                    `);
+                    } else {
+                         $('#modal_view_proof .modal-body').html(`
+                         <div class="p-3"> 
+                              <img src="${'../user-dashbord/uploads/' + this.getAttribute("data-proof-image")}" class="img-fluid mb-3" style="border-radius:10px" />
+                              <a download href="../user-dashbord/uploads/${this.getAttribute("data-proof-image")}" class="btn btn-success">Download</a>
+                         </div>
+                    `);
+                    }
+               })
           })
      })
 </script>

@@ -1,98 +1,47 @@
 <?php
+ob_start();
 require "header.php";
+
+$msg = $success = '';
+if (isset($_SESSION['success']) && isset($_SESSION['msg'])) {
+     // || checks for boolean values only
+     $success = $_SESSION['success'] || false;
+     $msg = $_SESSION['msg'];
+     //remove the session
+     unset($_SESSION['success']);
+     unset($_SESSION['msg']);
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay'])) {
-     // //? file upload code //
-     // $target_dir = "uploads/";
-     // $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-     // $uploadOk = 1;
-     // $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-     // // Check if image file is a actual image or fake image
-     // $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+     try {
+          $target_dir = "uploads/";
+          $target = $target_dir . basename($_FILES["proof_of_payment"]["name"]);
+          $target_file = $_FILES["proof_of_payment"]["name"];
+          $amount = $_SESSION['paymentAmount'];
+          $paymentMode = $_SESSION['paymentMode'];
+          $date = time();
+          //check if file was uploaded
+          if (!move_uploaded_file($_FILES["proof_of_payment"]["tmp_name"], $target)) {
+               $_SESSION['msg'] = "File upload failed";
+               $_SESSION['success'] = false;
+               header("Location:./payment.php");
+               exit();
+          } else {
+               $query =
+                    "INSERT INTO deposit (user_id, amount, payment_mode, prof_image, date)
+          VALUES(:user_id, :amount, :payment_mode, :prof_image, :date)";
+               $data = [
+                    'user_id' => $_SESSION['user_id'],
+                    'amount' => $amount,
+                    'payment_mode' => $paymentMode,
+                    'date' => $date,
+                    'prof_image' => $target_file
+               ];
 
-     // if ($check === false) {
-     //      print('<script>
-     //                document.addEventListener("DOMContentLoaded", function() {
-     //                toastr.error("Oops! Something went wrong try another payment method. Please try again");
-     //                setTimeout(function() {
-     //                          toastr.clear()
-     //                     }, 5000);
-     //                     })
-     //           </script>');
-     //      $_SESSION['error'] = 1;
-     //      $_SESSION['errorMassage'] = "file is not an image";
-     //      $uploadOk = 0;
-     // }
+               $result = $db->Insert($query, $data);
 
-     // // Check if file already exists
-     // if (file_exists($target_file)) {
-     //      print('<script>
-     //                document.addEventListener("DOMContentLoaded", function() {
-     //                toastr.error("Sorry, file already exists.");
-     //                setTimeout(function() {
-     //                          toastr.clear()
-     //                     }, 5000);
-     //                     })
-     //      </script>');
-     //      $uploadOk = 0;
-     // }
-
-     // // Check file size
-     // if ($_FILES["fileToUpload"]["size"] > 10000000) {
-     //      print('<script>
-     //                document.addEventListener("DOMContentLoaded", function() {
-     //                toastr.error("Sorry, your file is too large.");
-     //                setTimeout(function() {
-     //                          toastr.clear()
-     //                     }, 5000);
-     //                     })
-     //           </script>');
-     //      $uploadOk = 0;
-     // }
-
-     // // Allow certain file formats
-     // if (
-     //      $imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-     //      && $imageFileType != "gif"
-     // ) {
-     //      print('<script>
-     //                document.addEventListener("DOMContentLoaded", function() {
-     //                toastr.error("Sorry, only JPG, JPEG, PNG & GIF files are allowed");
-     //                setTimeout(function() {
-     //                          toastr.clear()
-     //                     }, 5000);
-     //                     })
-     //           </script>');
-     //      $uploadOk = 0;
-     // }
-     // // Check if $uploadOk is set to 0 by an error
-     // if ($uploadOk == 0) {
-     //      print('<script>
-     //                document.addEventListener("DOMContentLoaded", function() {
-     //                toastr.error("Sorry, some files were not uploaded, try again.");
-     //                setTimeout(function() {
-     //                          toastr.clear()
-     //                     }, 5000);
-     //                     })
-     //           </script>');
-     //      // if everything is ok, try to upload file
-     // } else {
-     $amount = $_SESSION['paymentAmount'];
-     $paymentMode = $_SESSION['paymentMode'];
-     $date = time();
-     // move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file);
-     $query =
-          "INSERT INTO deposit (user_id,amount,payment_mode,date,prof_image)
-          VALUES(:user_id, :amount, :payment_mode,:date)";
-     $data = [
-          'user_id' => $user_id,
-          'amount' => $amount,
-          'payment_mode' => $paymentMode,
-          'date' => $date,
-          // 'prof_image' => $target_file
-     ];
-     $result = $db->Insert($query, $data);
-     if ($result) {
-          print("<script>
+               if ($result) {
+                    print("<script>
                     document.addEventListener('DOMContentLoaded', function() {
                     toastr.success('file uploaded successfully');
                     setTimeout(function() {
@@ -101,10 +50,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay'])) {
                          window.location.href='index.php';
                          })
                </script>");
+               } else {
+                    $_SESSION['msg'] = "Deposit not found. Please try again";
+                    $_SESSION['success'] = false;
+                    header("Location:./deposit.php");
+                    exit();
+               }
+          }
+     } catch (Exception $e) {
+          error_log($e->getMessage());
+          $_SESSION['msg'] = "A server error has occured. Try again later";
+          $_SESSION['success'] = false;
+          header("Location:./deposit.php");
           exit();
-     } else {
-          echo "not found";
-          die();
      }
 }
 
@@ -138,38 +96,49 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay'])) {
                                    <div class="card bg-light shadow-lg p-2 p-md-4">
                                         <div class="card-body">
                                              <div>
-                                                  <h4 class="text-dark">You are to make payment of <strong><?= $_SESSION['paymentAmount'] ?></strong> using your selected payment method. Screenshot and upload the proof of payment</h4>
+                                                  <p>You are to make payment of <strong>
+                                                            <?= $_SESSION['paymentAmount'] ?>
+                                                       </strong> using your selected payment method.
+                                                       <br /><br />Screenshot and upload the proof of payment
+                                                  </p>
                                                   <h4>
                                                        <!-- <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/74.png" alt="" class="w-25"> -->
-                                                       <strong class="text-dark"><?= $_SESSION['paymentMode'] ?></strong>
+                                                       <strong class="text-dark">
+                                                            <?= $_SESSION['paymentMode'] ?>
+                                                       </strong>
                                                   </h4>
                                              </div>
 
                                              <div class="mt-5">
                                                   <h3 class="text-dark">
-                                                       <strong><?= $_SESSION['paymentMode'] ?> Address</strong>
+                                                       <strong>
+                                                            <?= $_SESSION['paymentMode'] ?> Address
+                                                       </strong>
                                                   </h3>
                                                   <div class="form-group">
-                                                       <div class="mb-3 input-group">
-                                                            <input type="text" class="form-control myInput readonly text-dark bg-light" value="<?= $_SESSION["addr"]  ?>" id="myInput" readonly="">
+                                                       <div class="mb-1 input-group">
+                                                            <input type="text" class="form-control myInput readonly text-dark bg-light" value="<?= $_SESSION["addr"] ?>" id="myInput" readonly="">
                                                             <div class="input-group-append">
                                                                  <button class="btn btn-outline-secondary" onclick="myFunction()" type="button" id="myInput"><i class="fas fa-copy"></i></button>
                                                             </div>
 
                                                        </div>
-                                                       <small class="text-dark"><strong>Network Type:</strong> Erc</small>
+                                                       <small class="text-dark"><strong>Network Type:</strong>
+                                                            Erc</small>
                                                   </div>
 
                                              </div>
-                                             <div>
-                                                  <form method="post" action="" enctype="multipart/form-data">
+                                             <div class="mt-4">
+                                                  <form method="post" id="form_confirm_payment" enctype="multipart/form-data">
                                                        <input type="hidden" name="_token" value="ZMgLCOo8sn0IbSt2nmwl672ocebXqh07tATgpH7u">
                                                        <!-- <div class="form-group">
                                                             <h5 class="text-dark">Upload Payment proof after payment.</h5>
                                                             <input type="file" name="fileToUpload" class="form-control col-lg-4 bg-light text-dark" required="">
                                                        </div> -->
-                                                       <input type="hidden" name="amount" value="300">
-                                                       <input type="hidden" name="paymethd_method" value="Doge">
+                                                       <div class="form-group mb-2">
+                                                            <label class="form-label">Select proof of payment</label>
+                                                            <input id="inp_proof" name="proof_of_payment" type="file" class="form-control" octavalidate="R" accept-mime="image/jpeg, image/png, image/jpg" maxsize="5mb" />
+                                                       </div>
 
                                                        <div class="form-group mt-5">
                                                             <input type="submit" name="pay" class="btn btn-dark" value="Done Paying">
@@ -187,6 +156,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay'])) {
      </section>
      <!-- Page Footer-->
      <?php require "footer.php" ?>
+     <script>
+          document.addEventListener('DOMContentLoaded', () => {
+               $('#form_confirm_payment').on('submit', (e) => {
+                    const myForm = new octaValidate(e.target.id, {
+                         strictMode: true
+                    });
+                    if (myForm.validate()) {
+                         e.target.submit()
+                    } else {
+                         e.preventDefault();
+                    }
+               })
+          })
+          <?php
+          if (isset($success) && isset($msg)) {
+               if ($success && !empty($msg)) {
+          ?>
+                    toastr.success("<?php echo $msg; ?>")
+               <?php
+               } elseif (!$success && !empty($msg)) { ?>
+                    toastr.error("<?php echo $msg; ?>")
+          <?php
+               }
+          }
+          ?>
+     </script>
 </div>
 </div>
 </div>

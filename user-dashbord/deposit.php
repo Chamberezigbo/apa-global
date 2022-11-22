@@ -1,4 +1,6 @@
 <?php
+//turn on output buffering
+ob_start();
 require "header.php";
 $msg = $success = '';
 if (isset($_SESSION['success']) && isset($_SESSION['msg'])) {
@@ -17,17 +19,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay'])) {
           $_SESSION["addr"] = $result['addr'];
           $_SESSION['paymentAmount'] = $amount;
           $_SESSION['paymentMode'] = $paymentMode;
-          echo "<script>window.location.href='payment.php';</script>";
-          exit();
+          header("Location: payment.php");
      } else {
           $_SESSION['success'] = false;
-          $_SESSION['msg'] = "Payment failed try with another method";
-          //reset post array
+          $_SESSION['msg'] = "Payment failed. Try another method";
+          //Header wont move because it is on the same page
           header("Location: ./deposit.php");
-          exit();
      }
+     exit();
 }
-
 ?>
 
 <div class="content-inner w-100">
@@ -61,19 +61,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay'])) {
                                         <div class="row">
                                              <div class="mb-4 col-md-12">
                                                   <h5 class="card-title text-dark">Enter Amount</h5>
-                                                  <input class="form-control text-dark bg-light" placeholder="Enter Amount" type="number" name="amount" required>
+                                                  <input onchange="(this.value < 0) ? this.value = 0 : null" class="form-control text-dark bg-light" placeholder="Enter Amount" type="number" name="amount" required>
                                              </div>
                                              <div class="mb-4 col-md-12">
                                                   <select class="form-select" name="paymentMode" id="floatingSelect" aria-label="Floating label select example">
-                                                       <option selected>USDT</option>
-                                                       <option>Litecoin</option>
-                                                       <option>Bitcoin</option>
-                                                       <option>Ethereum</option>
-                                                       <option>Doge</option>
-                                                       <option>Bitcoin Cash</option>
+                                                       <option value="">Select One</option>
+                                                       <?php
+                                                       $methods = $db->SelectAll("SELECT * FROM payment_methods WHERE addr IS NOT NULL", []);
 
+                                                       if ($methods && count($methods)) {
+                                                            foreach ($methods as $i => $method) {
+                                                       ?>
+                                                                 <option value="<?php print($method['method']); ?>">
+                                                                      <?php print($method['method']); ?>
+                                                                 </option>
+                                                       <?php
+                                                            }
+                                                       }
+                                                       ?>
                                                   </select>
-                                                  <label for="floatingSelect">select a payment methode</label>
+                                                  <label for="floatingSelect">select a payment method</label>
                                              </div>
                                              <div class="col-md-6">
                                                   <div class="card">
@@ -140,7 +147,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay'])) {
                                                   </div>
                                              </div>
                                              <div class="d-grid gap-2">
-                                                  <button name="pay" class="btn btn-primary" type="submit">Containue</button>
+                                                  <button name="pay" class="btn btn-primary" type="submit">Continue</button>
                                              </div>
                                         </div>
                                    </form>
