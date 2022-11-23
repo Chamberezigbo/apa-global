@@ -57,17 +57,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay'])) {
                               <div class="col-md-8">
 
                                    <form action="" method="post" id="submitpaymentform">
-                                        <input type="hidden" name="_token"
-                                             value="VwJXSdV5Py8OIzWjZnjqdOUj6MXszJxbjQZCUJJF">
+                                        <input type="hidden" name="_token" value="VwJXSdV5Py8OIzWjZnjqdOUj6MXszJxbjQZCUJJF">
                                         <div class="row">
                                              <div class="mb-4 col-md-12">
                                                   <h5 class="card-title text-dark">Enter Amount</h5>
-                                                  <input onchange="(this.value < 0) ? this.value = 0 : null" class="form-control text-dark bg-light"
-                                                       placeholder="Enter Amount" type="number" name="amount" required>
+                                                  <input onchange="(this.value < 0) ? this.value = 0 : null" class="form-control text-dark bg-light" placeholder="Enter Amount" type="number" name="amount" required>
                                              </div>
                                              <div class="mb-4 col-md-12">
-                                                  <select class="form-select" name="paymentMode" id="floatingSelect"
-                                                       aria-label="Floating label select example">
+                                                  <select class="form-select" name="paymentMode" id="floatingSelect" aria-label="Floating label select example">
                                                        <option value="">Select One</option>
                                                        <?php
                                                        $methods = $db->SelectAll("SELECT * FROM payment_methods WHERE addr IS NOT NULL", []);
@@ -75,22 +72,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay'])) {
                                                        if ($methods && count($methods)) {
                                                             foreach ($methods as $i => $method) {
                                                        ?>
-                                                       <option value="<?php print($method['method']); ?>">
-                                                            <?php print($method['method']); ?>
-                                                       </option>
+                                                                 <option value="<?php print($method['method']); ?>">
+                                                                      <?php print($method['method']); ?>
+                                                                 </option>
                                                        <?php
                                                             }
                                                        }
                                                        ?>
                                                   </select>
                                                   <label for="floatingSelect">select a payment method</label>
+                                                  <label for="floatingSelect">select a payment method</label>
                                              </div>
                                              <div class="col-md-6">
                                                   <div class="card">
                                                        <div class="card-body">
                                                             <div class="d-flex">
-                                                                 <img src="https://imgs.search.brave.com/_kUCc5M-8rKIllUV_Et0Pt2XUMsvmV4BKCxfp0btOAY/rs:fit:847:225:1/g:ce/aHR0cHM6Ly90c2Uy/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5f/RnY3Tk1FQ1lScmh3/OUJBWUZZMldRSGFF/SiZwaWQ9QXBp"
-                                                                      width="15%" alt="">
+                                                                 <img src="https://imgs.search.brave.com/_kUCc5M-8rKIllUV_Et0Pt2XUMsvmV4BKCxfp0btOAY/rs:fit:847:225:1/g:ce/aHR0cHM6Ly90c2Uy/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5f/RnY3Tk1FQ1lScmh3/OUJBWUZZMldRSGFF/SiZwaWQ9QXBp" width="15%" alt="">
                                                                  <p class="ms-auto">USDT</p>
                                                             </div>
                                                        </div>
@@ -101,8 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay'])) {
                                                   <div class="card">
                                                        <div class="card-body">
                                                             <div class="d-flex">
-                                                                 <img src="https://cdn.pixabay.com/photo/2013/12/08/12/12/bitcoin-225079_960_720.png"
-                                                                      width="10%" alt="">
+                                                                 <img src="https://cdn.pixabay.com/photo/2013/12/08/12/12/bitcoin-225079_960_720.png" width="10%" alt="">
                                                                  <p class="ms-auto">Bitcoin Cash</p>
                                                             </div>
                                                        </div>
@@ -112,8 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay'])) {
                                                   <div class="card">
                                                        <div class="card-body">
                                                             <div class="d-flex">
-                                                                 <img src="https://cdn.pixabay.com/photo/2021/05/12/20/18/dogecoin-6249162__340.png"
-                                                                      width="10%" alt="">
+                                                                 <img src="https://cdn.pixabay.com/photo/2021/05/12/20/18/dogecoin-6249162__340.png" width="10%" alt="">
                                                                  <p class="ms-auto">Doge</p>
                                                             </div>
                                                        </div>
@@ -124,8 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay'])) {
                                                   <div class="card">
                                                        <div class="card-body">
                                                             <div class="d-flex">
-                                                                 <img src="https://cdn.pixabay.com/photo/2018/05/08/21/29/paypal-3384015__340.png"
-                                                                      width="10%" alt="">
+                                                                 <img src="https://cdn.pixabay.com/photo/2018/05/08/21/29/paypal-3384015__340.png" width="10%" alt="">
                                                                  <p class="ms-auto">Paypal</p>
                                                             </div>
                                                        </div>
@@ -136,8 +130,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay'])) {
                                                   <div class="card">
                                                        <div class="card-body">
                                                             <div class="d-flex">
-                                                                 <img src="https://imgs.search.brave.com/IMv6YbifW7hn1Y9iNl-6a2s8-lnUhlcfO4eYg1PeNJ8/rs:fit:474:225:1/g:ce/aHR0cHM6Ly90c2Uz/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5y/OTU1c1BJQ041VnJh/TENMMEo3VnVRSGFI/YSZwaWQ9QXBp"
-                                                                      width="10%" alt="">
+                                                                 <img src="https://imgs.search.brave.com/IMv6YbifW7hn1Y9iNl-6a2s8-lnUhlcfO4eYg1PeNJ8/rs:fit:474:225:1/g:ce/aHR0cHM6Ly90c2Uz/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5y/OTU1c1BJQ041VnJh/TENMMEo3VnVRSGFI/YSZwaWQ9QXBp" width="10%" alt="">
                                                                  <p class="ms-auto">Litecoin</p>
                                                             </div>
                                                        </div>
@@ -148,16 +141,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay'])) {
                                                   <div class="card">
                                                        <div class="card-body">
                                                             <div class="d-flex">
-                                                                 <img src="https://imgs.search.brave.com/lyo7BA_r7eqNAjOWI0HmujEo9iN2zdXdTE43wjCNhxg/rs:fit:453:225:1/g:ce/aHR0cHM6Ly90c2Uy/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5p/Rm9TRE9iM1JEZXBD/U3V4WHhNNEVnSGFI/diZwaWQ9QXBp"
-                                                                      width="10%" alt="">
+                                                                 <img src="https://imgs.search.brave.com/lyo7BA_r7eqNAjOWI0HmujEo9iN2zdXdTE43wjCNhxg/rs:fit:453:225:1/g:ce/aHR0cHM6Ly90c2Uy/Lm1tLmJpbmcubmV0/L3RoP2lkPU9JUC5p/Rm9TRE9iM1JEZXBD/U3V4WHhNNEVnSGFI/diZwaWQ9QXBp" width="10%" alt="">
                                                                  <p class="ms-auto">Ethereum</p>
                                                             </div>
                                                        </div>
                                                   </div>
                                              </div>
                                              <div class="d-grid gap-2">
-                                                  <button name="pay" class="btn btn-primary"
-                                                       type="submit">Continue</button>
+                                                  <button name="pay" class="btn btn-primary" type="submit">Continue</button>
+                                                  <button name="pay" class="btn btn-primary" type="submit">Continue</button>
                                              </div>
                                         </div>
                                    </form>
@@ -174,14 +166,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay'])) {
           if (isset($success) && isset($msg)) {
                if ($success && !empty($msg)) {
           ?>
-                         toastr.success("<?php echo $msg; ?>")
-                         <?php
+                    toastr.success("<?php echo $msg; ?>")
+               <?php
                } elseif (!$success && !empty($msg)) { ?>
                     toastr.error("<?php echo $msg; ?>")
-                    <?php
+          <?php
                }
           }
-                    ?>
+          ?>
+     </script>
+     <script>
+          <?php
+          if (isset($success) && isset($msg)) {
+               if ($success && !empty($msg)) {
+          ?>
+                    toastr.success("<?php echo $msg; ?>")
+               <?php
+               } elseif (!$success && !empty($msg)) { ?>
+                    toastr.error("<?php echo $msg; ?>")
+          <?php
+               }
+          }
+          ?>
      </script>
 </div>
 </div>
