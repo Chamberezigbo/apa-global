@@ -10,6 +10,8 @@
      </div>
 </footer>
 
+<!-- Place this script before the </head> tag -->
+<script src="https://unpkg.com/octavalidate@1.2.9/native/validate.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="vendor/chart.js/Chart.min.js"></script>
 <script src="vendor/just-validate/js/just-validate.min.js"></script>

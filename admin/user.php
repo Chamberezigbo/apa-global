@@ -223,7 +223,7 @@ require "header.php";
      </div>
 </div>
 
-<!-- modal update password -->
+<!-- modal update balance -->
 <div class="modal" id="modal_bal" tabindex="-1">
      <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">

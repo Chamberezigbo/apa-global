@@ -81,6 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay'])) {
                                                        ?>
                                                   </select>
                                                   <label for="floatingSelect">select a payment method</label>
+                                                  <label for="floatingSelect">select a payment method</label>
                                              </div>
                                              <div class="col-md-6">
                                                   <div class="card">
@@ -148,6 +149,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay'])) {
                                              </div>
                                              <div class="d-grid gap-2">
                                                   <button name="pay" class="btn btn-primary" type="submit">Continue</button>
+                                                  <button name="pay" class="btn btn-primary" type="submit">Continue</button>
                                              </div>
                                         </div>
                                    </form>
@@ -159,6 +161,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay'])) {
      </section>
      <!-- Page Footer-->
      <?php require "footer.php" ?>
+     <script>
+          <?php
+          if (isset($success) && isset($msg)) {
+               if ($success && !empty($msg)) {
+          ?>
+                    toastr.success("<?php echo $msg; ?>")
+               <?php
+               } elseif (!$success && !empty($msg)) { ?>
+                    toastr.error("<?php echo $msg; ?>")
+          <?php
+               }
+          }
+          ?>
+     </script>
      <script>
           <?php
           if (isset($success) && isset($msg)) {

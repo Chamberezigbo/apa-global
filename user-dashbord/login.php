@@ -1,6 +1,7 @@
 <?php
 //check if session is started already
-if (session_status() === PHP_SESSION_NONE) session_start();
+if (session_status() === PHP_SESSION_NONE)
+     session_start();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
      require '../process/pdo.php';
@@ -16,8 +17,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           $_SESSION['start'] = time();
           $_SESSION['expire'] = $_SESSION['start'] + (40 * 60);
           print('<script>
-                document.addEventListener("DOMContentLoaded", function() {
-                     toastr.success("You have been loged in as APA Admin");
+                    document.addEventListener("DOMContentLoaded", function() {
+                    toastr.success("You have been loged in as APA Admin");
                     })
           </script>');
           //? need to change the rediraction // 
@@ -47,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                          //? $_SESSION['balance'] =  $result['bonus_balance'];//
                          //? $_SESSION['balance'] =  $result['referal_balance'];//
                          print('<script>
-                               document.addEventListener("DOMContentLoaded", function() {
+                              document.addEventListener("DOMContentLoaded", function() {
                               toastr.success("Welcome youve been login");
                               })
                          </script>');
@@ -61,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                          // }
                     } else {
                          print('<script>
-                               document.addEventListener("DOMContentLoaded", function() {
+                                   document.addEventListener("DOMContentLoaded", function() {
                                    toastr.error("Wrong password");
                                    toastr.clear()
                               })
@@ -70,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                }
           } else {
                print('<script>
-                     document.addEventListener("DOMContentLoaded", function() {
+                         document.addEventListener("DOMContentLoaded", function() {
                          toastr.error("Wrong password");
                          setTimeout(function() {
                               toastr.clear()
@@ -106,8 +107,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
      <link rel="stylesheet" href="../assets/toastr-master/build/toastr.min.css">
      <!-- Tweaks for older IEs-->
      <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
 </head>
 
 <body>
@@ -121,7 +122,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                    <div class="info d-flex justify-content-center flex-column p-4 h-100">
                                         <div class="py-5">
                                              <h1 class="display-6 fw-bold">APA Financial</h1>
-                                             <p class="fw-light mb-0">Login for a free account and login to your user dashboard</p>
+                                             <p class="fw-light mb-0">Login for a free account and login to your user
+                                                  dashboard</p>
                                         </div>
                                    </div>
                               </div>
@@ -130,14 +132,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                    <div class="d-flex align-items-center px-4 px-lg-5 h-100">
                                         <form class="login-form py-5 w-100" method="post" action="">
                                              <div class="input-material-group mb-3">
-                                                  <input class="input-material" id="login-username" type="text" name="loginUsername" autocomplete="off">
-                                                  <label class="label-material" for="login-username">User Name / Email</label>
+                                                  <input class="input-material" id="login-username" type="text"
+                                                       name="loginUsername" autocomplete="off">
+                                                  <label class="label-material" for="login-username">User Name /
+                                                       Email</label>
                                              </div>
                                              <div class="input-material-group mb-4">
-                                                  <input class="input-material" id="login-password" type="password" name="loginPassword" required data-validate-field="loginPassword">
+                                                  <input class="input-material" id="login-password" type="password"
+                                                       name="loginPassword" required
+                                                       data-validate-field="loginPassword">
                                                   <label class="label-material" for="login-password">Password</label>
                                              </div>
-                                             <button class="btn btn-primary mb-3" type="submit">Login</button><br><a class="text-sm text-paleBlue" href="#">Forgot Password?</a><br><small class="text-gray-500">Do not have an account? </small><a class="text-sm text-paleBlue" href="../register.php">Signup</a>
+                                             <button class="btn btn-primary mb-3" type="submit">Login</button><br><a
+                                                  class="text-sm text-paleBlue" href="#">Forgot Password?</a><br><small
+                                                  class="text-gray-500">Do not have an account? </small><a
+                                                  class="text-sm text-paleBlue" href="../register.php">Signup</a>
                                         </form>
                                    </div>
                               </div>
@@ -165,7 +174,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                var ajax = new XMLHttpRequest();
                ajax.open("GET", path, true);
                ajax.send();
-               ajax.onload = function(e) {
+               ajax.onload = function (e) {
                     var div = document.createElement("div");
                     div.className = 'd-none';
                     div.innerHTML = ajax.responseText;
@@ -179,7 +188,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
           injectSvgSprite('https://bootstraptemple.com/files/icons/orion-svg-sprite.svg');
      </script>
      <!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
-     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
+          integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 </body>
 
 </html>
