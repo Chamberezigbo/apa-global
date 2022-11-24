@@ -131,7 +131,7 @@
                                    <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
                                         <use xlink:href="#survey-1"> </use>
                                    </svg>Create Notice</a></li>
-                         <li class="sidebar-item btna"><a class="sidebar-link" href="update-packages.php">
+                         <li class="sidebar-item btna"><a class="sidebar-link" href="packages.php">
                                    <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
                                         <use xlink:href="#survey-1"> </use>
                                    </svg>Manage Packages</a></li>
