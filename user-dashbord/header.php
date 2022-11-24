@@ -30,6 +30,12 @@ if (!$_SESSION['auth']) {
                ($result['total_deposit'] == NULL) ? $totalDeposit = 0 : $totalDeposit = $result['total_deposit'];
                ($result['total_withdraws'] == NULL) ? $totalWithdraws = 0 : $totalWithdraws = $result['total_withdraws'];
           }
+          //get notices
+          $notices = $db->SelectAll("SELECT * FROM notice WHERE user_id = :uid", [
+               'uid' => $user_Id
+          ]);
+          //notices count
+          $notices_count = ($notices && count($notices)) ? count($notices) : 0;
 ?>
           <!DOCTYPE html>
           <html>
@@ -96,18 +102,28 @@ if (!$_SESSION['auth']) {
                                              <li class="nav-item dropdown"> <a class="nav-link text-white" id="notifications" href="#" data-bs-toggle="dropdown" aria-expanded="false">
                                                        <svg class="svg-icon svg-icon-xs svg-icon-heavy">
                                                             <use xlink:href="#chart-1"> </use>
-                                                       </svg><span class="badge bg-red badge-corner fw-normal">1</span></a>
+                                                       </svg><span class="badge bg-red badge-corner fw-normal"><?php echo $notices_count; ?></span></a>
                                                   <ul class="dropdown-menu dropdown-menu-end mt-3 shadow-sm" aria-labelledby="notifications">
-                                                       <li><a class="dropdown-item py-3" href="#">
+                                                       <?php if($notices_count): ?>
+                                                            <?php foreach($notices as $i => $notice){
+                                                       ?>
+                                                       <li>
+                                                            <a class="dropdown-item py-3" href="#">
                                                                  <div class="d-flex">
                                                                       <div class="icon icon-sm bg-blue">
                                                                            <svg class="svg-icon svg-icon-xs svg-icon-heavy">
                                                                                 <use xlink:href="#envelope-1"> </use>
                                                                            </svg>
                                                                       </div>
-                                                                      <div class="ms-3"><span class="h6 d-block fw-normal mb-1 text-xs text-gray-600">You have 6 new messages </span><small class="small text-gray-600">4 minutes ago</small></div>
+                                                                      <div class="ms-3 w-100">
+                                                                           <span class="h6 mt-2 d-block fw-normal mb-1 text-xs text-gray-600"><?php echo $notice['notice']; ?>
+                                                                           </span>
+                                                                      </div>
                                                                  </div>
-                                                            </a></li>
+                                                            </a>
+                                                       </li>
+                                                            <?php } ?>
+                                                            <?php endif; ?>
                                                   </ul>
                                              </li>
                                              <!-- Languages dropdown    -->
