@@ -25,14 +25,22 @@
      <section class="forms">
           <div class="container-fluid">
                <div class="row">
+
                     <!-- Basic Form-->
                     <div class="col-md-12 text-center">
+                         <strong>You can refer users by sharing your referral link:</strong><br>
+                         <div class="mb-3 input-group">
+                              <input type="text" class="form-control myInput readonly text-dark bg-light" value="http://localhost/apa-global/register.php/?ref=<?= $username ?>" id="myInput" readonly="">
+                              <div class="input-group-append">
+                                   <button class="btn btn-outline-secondary" onclick="myFunction()" type="button" id="button-addon2"><i class="fas fa-copy"></i></button>
+                              </div>
+                         </div><br>
                          <strong>Your Referral ID</strong><br>
                          <h4 style="color:green;"><?= $username ?></h4> <br>
                          <h3 class="title1">
                               <small>You were referred by</small><br>
                               <i class="fa fa-user fa-2x"></i><br>
-                              <small>null</small>
+                              <small><?= $ref ?></small>
                          </h3>
                     </div>
                     <div class="mt-4 col-md-12">

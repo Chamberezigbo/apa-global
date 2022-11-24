@@ -23,6 +23,7 @@ if (!$_SESSION['auth']) {
                $balance = $result['balance'];
                $bonus = $result['total_bonus'];
                $username = $result['username'];
+               ($result['referral'] == NULL) ? $ref = "Null" : $ref = $result['referral'];
                ($result['total_profit'] == NULL) ? $profit = 0 : $profit = $result['total_profit'];
                ($result['total_inv_plans'] == NULL) ? $totalInvestment = 0 : $totalInvestment = $result['total_inv_plans'];
                ($result['total_act_plans'] == NULL) ? $totalAccountPlan = 0 : $totalAccountPlan = $result['total_act_plans'];

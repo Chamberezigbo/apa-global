@@ -60,17 +60,23 @@
                                                        <?php
                                                        $results = $db->SelectAll("SELECT * FROM deposit WHERE user_id = :userId", ['userId' => $user_Id]);
                                                        if ($results && count($results)) {
-                                                            foreach($results as $i => $result){
+                                                            foreach ($results as $i => $result) {
                                                        ?>
-                                                            <tr>
-                                                                 <th><?= $result['amount'] ?></th>
-                                                                 <td><?= $result['payment_mode'] ?></td>
-                                                                 <td><?= $result['status'] ?></td>
-                                                                 <td><?= $result['date'] ?></td>
-                                                            </tr>
+                                                                 <tr>
+                                                                      <th><?= $result['amount'] ?></th>
+                                                                      <td><?= $result['payment_mode'] ?></td>
+                                                                      <td><?= $result['status'] ?></td>
+                                                                      <td><?= $result['date'] ?></td>
+                                                                 </tr>
+                                                            <?php
+                                                            }
+                                                       } else {
+                                                            ?>
+                                                            <td colspan="5" class="text-center">
+                                                                 <span class="text-danger">No data found</span>
+                                                            </td>
                                                        <?php
-                                                       }
-                                                  }
+                                                       };
                                                        ?>
                                                   </tbody>
                                              </table>
@@ -106,17 +112,23 @@
                                                        <?php
                                                        $results = $db->SelectAll("SELECT * FROM deposit WHERE user_id = :userId", ['userId' => $user_Id]);
                                                        if ($results && count($results)) {
-                                                            foreach($results as $i => $result){
+                                                            foreach ($results as $i => $result) {
                                                        ?>
-                                                            <tr>
-                                                                 <th><?= $result['amount'] ?></th>
-                                                                 <td><?= $result['payment_mode'] ?></td>
-                                                                 <td><?= $result['status'] ?></td>
-                                                                 <td><?= $result['date'] ?></td>
-                                                            </tr>
+                                                                 <tr>
+                                                                      <th><?= $result['amount'] ?></th>
+                                                                      <td><?= $result['payment_mode'] ?></td>
+                                                                      <td><?= $result['status'] ?></td>
+                                                                      <td><?= $result['date'] ?></td>
+                                                                 </tr>
+                                                            <?php
+                                                            }
+                                                       } else {
+                                                            ?>
+                                                            <td colspan="5" class="text-center">
+                                                                 <span class="text-danger">No data found</span>
+                                                            </td>
                                                        <?php
-                                                       }
-                                                  }
+                                                       };
                                                        ?>
                                                   </tbody>
                                              </table>

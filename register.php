@@ -1,7 +1,13 @@
 <?php
+ob_start();
 if (session_status() === PHP_SESSION_NONE) session_start();
 require './process/pdo.php';
 require 'assets/octaValidate-PHP-main/src/Validate.php';
+if (isset($_GET['ref'])) {
+     # code...
+     $ref = $_GET['ref'];
+}
+
 
 use Validate\octaValidate;
 
@@ -41,10 +47,25 @@ $valRules = array(
           ["EQUALTO", "pass", "password must equal to password",]
      ),
 );
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+do {
      //begin validation on form fields from $_POST array
      if ($myForm->validateFields($valRules, $_POST)) {
           //Selecting a single row!//
+          if (isset($ref)) {
+               $result = $db->SelectOne("SELECT * FROM users WHERE username = :username", ['username' => $ref]);
+               if ($result) {
+                    $balance = $result['balance'];
+                    $totalRef = $result['total_ref_bonus'];
+                    $totalRef = $totalRef + 5;
+                    $balance = $balance + $totalRef;
+                    $secondResult = $db->Update(
+                         "UPDATE users SET balance = :balance, total_ref_bonus = :bonus WHERE username = :username",
+                         ['balance' => $balance, 'bonus' => $totalRef, 'username' => $ref]
+                    );
+               } else {
+                    $ref = NULL;
+               }
+          };
 
           $result = $db->SelectOne("SELECT email FROM users WHERE email = :email", ['email' => $_POST['email']]);
 
@@ -72,8 +93,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                $balance = 5;
                $user_id = md5(time() . $email);
 
-               $query = "INSERT INTO users (	user_id, fullName,	email, password, phone, country,balance,username)
-               VALUES(:user_id, :fullname, :email, :password, :phone, :country, :balance, :username)";
+               $query = "INSERT INTO users (	user_id, fullName,	email, password, phone, country,balance,username, referral)
+               VALUES(:user_id, :fullname, :email, :password, :phone, :country, :balance, :username,:referral)";
                $data = [
                     'user_id' => $user_id,
                     'fullname' => $fullName,
@@ -82,7 +103,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     'phone' => $phone,
                     'country' => $country,
                     'balance' => $balance,
-                    'username' => $username
+                    'username' => $username,
+                    'referral' => $ref,
                ];
 
                $result = $db->Insert($query, $data);
@@ -91,22 +113,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $_SESSION['start'] = time();
                     $_SESSION['expire'] = $_SESSION['start'] + (40 * 60);
                     $_SESSION['user_id'] = $user_id;
-                    header("Location:user-dashbord");
+                    header("Location:http://localhost/apa-global/user-dashbord");
+                    exit();
                } else {
                     $_SESSION['error'] = 1;
-                    $_SESSION['errorMassage'] = "Signup was not successful";
+                    $_SESSION['errorMassage '] = "Signup was not successful";
                     header("Location:register.php");
+                    exit();
                };
           };
      } else {
           //return errors
-     
+
           print('<script>
-     document.addEventListener("DOMContentLoaded", function(){
-          showErrors(' . json_encode($myForm->getErrors()) . ');
-    });</script>');
+               document.addEventListener("DOMContentLoaded", function(){
+                    showErrors(' . json_encode($myForm->getErrors()) . ');
+          });</script>');
      }
-}
+} while ($_SERVER['REQUEST_METHOD'] == 'POST')
+
+
 
 ?>
 <!DOCTYPE html>
@@ -233,7 +259,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                                   <div class="field">
                                                        <label class="label">Referral ID</label>
                                                        <div class="control has-icons-left has-icons-right">
-                                                            <input class="input is-success" name="referralId" type="text" placeholder="Referral optional">
+                                                            <input class="input is-success" name="referralId" type="text" placeholder="Referral optional" value=" <?php (isset($_GET) && isset($_GET['ref'])) ? print($ref) : '' ?>">
                                                             <span class="icon is-small is-left">
                                                                  <i class="fa-thin fa-repeat"></i>
                                                             </span>
@@ -255,7 +281,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                                             <button class="button is-link">Submit</button>
                                                        </div>
                                                        <div class="control">
-                                                            <button class="button is-link is-light">Cancel</button>
+                                                            <a class="button" href="user-dashbord/login.php">
+                                                                 Login
+                                                            </a>
                                                        </div>
                                                   </div>
                                         </form>
