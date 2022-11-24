@@ -20,18 +20,33 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
                     $plan = $db->SelectOne("SELECT * FROM package WHERE id = :id", ['id' => $_POST['id']]);
                     if($plan){
                          //check if there's money in the person's account
-                         if($balance && intval($balance) > $amount){
-                              //save investment
-                              $db->Insert("INSERT INTO investments (user_id, package_id, amount_invested, date) VALUES (:uid, :pid, :amt, :date)", [
-                                   'uid' => $_SESSION['user_id'],
-                                   'pid' => $id,
-                                   'amt' => $amount,
-                                   'date' => time()
-                              ]);
-                              $_SESSION['success'] = true;
-                              $_SESSION['msg'] = "Plan subscribed successfully";
-                              header("Location: ./investments.php");
-                              exit();
+                         if($balance){
+                              //if the person has sufficient amount in wallet
+                              if(intval($balance) > $amount){
+                                   //save investment
+                                   $db->Insert("INSERT INTO investments (user_id, package_id, amount_invested, date) VALUES (:uid, :pid, :amt, :date)", [
+                                        'uid' => $_SESSION['user_id'],
+                                        'pid' => $id,
+                                        'amt' => $amount,
+                                        'date' => time()
+                                   ]);
+                                   $newBalance = intval($balance) - intval($amount);
+                                   //update user's balance
+                                   $db->Update("UPDATE users SET balance = :bal WHERE user_id = :uid", [
+                                        'uid' => $_SESSION['user_id'],
+                                        'bal' => $newBalance
+                                   ]);
+                                   $_SESSION['success'] = true;
+                                   $_SESSION['msg'] = "Plan subscribed successfully";
+                                   header("Location: ./investments.php");
+                                   exit();
+                              }else{
+                                   //redirect to deposit
+                                   $_SESSION['success'] = false;
+                                   $_SESSION['msg'] = "Your account balance is too low";
+                                   header("Location: ./deposit.php");
+                                   exit();
+                              }
                          }else{
                               //redirect to deposit
                               $_SESSION['success'] = false;
