@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                exit();
           }
      }
-};
+}
 //acc bal is sum of except 
 require "header.php";
 
