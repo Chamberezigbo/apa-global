@@ -1,7 +1,8 @@
 <?php
 //turn on output buffering
 ob_start();
-require "header.php";
+require_once('app.php');
+
 $msg = $success = '';
 if (isset($_SESSION['success']) && isset($_SESSION['msg'])) {
      // || checks for boolean values only
@@ -28,6 +29,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay'])) {
      }
      exit();
 }
+
+include("header.php");
 ?>
 
 <div class="content-inner w-100">
@@ -149,7 +152,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay'])) {
                                              </div>
                                              <div class="d-grid gap-2">
                                                   <button name="pay" class="btn btn-primary" type="submit">Continue</button>
-                                                  <button name="pay" class="btn btn-primary" type="submit">Continue</button>
                                              </div>
                                         </div>
                                    </form>
@@ -161,20 +163,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay'])) {
      </section>
      <!-- Page Footer-->
      <?php require "footer.php" ?>
-     <script>
-          <?php
-          if (isset($success) && isset($msg)) {
-               if ($success && !empty($msg)) {
-          ?>
-                    toastr.success("<?php echo $msg; ?>")
-               <?php
-               } elseif (!$success && !empty($msg)) { ?>
-                    toastr.error("<?php echo $msg; ?>")
-          <?php
-               }
-          }
-          ?>
-     </script>
      <script>
           <?php
           if (isset($success) && isset($msg)) {

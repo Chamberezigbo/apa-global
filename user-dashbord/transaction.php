@@ -1,4 +1,7 @@
-<?php require "header.php"; ?>
+<?php 
+require_once('app.php');
+include "header.php"; 
+?>
 <div class="content-inner w-100">
      <!-- Page Header-->
      <header class="bg-white shadow-sm px-4 py-3 z-index-20">
