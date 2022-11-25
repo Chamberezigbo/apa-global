@@ -1,6 +1,6 @@
 <?php
-ob_start();
-require "header.php";
+
+require_once('app.php');
 
 $msg = $success = '';
 if (isset($_SESSION['success']) && isset($_SESSION['msg'])) {
@@ -143,7 +143,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay'])) {
      }
 }
 
-
+include("header.php");
 ?>
 <div class="content-inner w-100">
      <!-- Page Header-->

@@ -1,4 +1,7 @@
-<?php require "header.php"; ?>
+<?php 
+require_once('app.php');
+include  "header.php";
+?>
 <style>
      .fs-custom {
           font-size: 13px;

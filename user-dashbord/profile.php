@@ -1,5 +1,5 @@
 <?php
-require "header.php";
+require_once('app.php');
 if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['profile'])) {
      $result = $db->Update(
           "UPDATE users SET fullName = :fullName, phone = :phone, username = :username, balance = :balance WHERE users.id = :id",
@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['profile'])) {
      });</script>');
      }
 }
-
+include("header.php");
 ?>
 <div class="content-inner w-100">
      <!-- Page Header-->
