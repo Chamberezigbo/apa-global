@@ -143,13 +143,17 @@
                                    <li><a class="sidebar-link" href="plans.php">Suscribe to a Plan</a></li>
                                    <li><a class="sidebar-link" href="index.php">My Investment</a></li>
                               </ul>
-                         </li>
-                         <li class="sidebar-item"><a class="sidebar-link" href="referals.php">
+                         </li> -->
+                         <li class="sidebar-item"><a class="sidebar-link" href="referels.php">
                                    <i class="fa-solid fa-arrows-rotate me-xl-2 fa-1x"></i>
-                                   </svg>Referral</a>
+                                   </svg>Referels</a>
+                         </li>
+                         <li class="sidebar-item"><a class="sidebar-link" href="profit.php">
+                                   <i class="fa-solid fa-arrows-rotate me-xl-2 fa-1x"></i>
+                                   </svg>Add Profit</a>
                          </li>
                     </ul>
-                    <span class="text-uppercase text-gray-400 text-xs letter-spacing-0 mx-3 px-2 heading">Extras</span>
+                    <!-- <!-- <span class="text-uppercase text-gray-400 text-xs letter-spacing-0 mx-3 px-2 heading">Extras</span>
                     <ul class="list-unstyled py-4">
                          <li class="sidebar-item"> <a class="sidebar-link" href="deposit.php">
                                    <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
@@ -162,10 +166,10 @@
                          <li class="sidebar-item"> <a class="sidebar-link" href="">
                                    <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
                                         <use xlink:href="#quality-1"> </use>
-                                   </svg>Account Settings</a></li>
-                         <!-- <li class="sidebar-item"> <a class="sidebar-link" href="#">
+                                   </svg>Account Settings</a></li> -->
+                    <!-- <li class="sidebar-item"> <a class="sidebar-link" href="#">
                                    <svg class="svg-icon svg-icon-sm svg-icon-heavy me-xl-2">
                                         <use xlink:href="#security-shield-1"> </use>
-                                   </svg>Demo </a></li> -->
-                    </ul>
+                                   </svg>Demo </a></li>
+                    </ul> -->
                </nav>
