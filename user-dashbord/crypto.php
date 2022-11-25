@@ -1,5 +1,6 @@
 <?php
-require "header.php"
+require_once('app.php');
+include("header.php");
 ?>
 <div class="content-inner w-100">
      <!-- Page Header-->

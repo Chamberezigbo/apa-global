@@ -90,17 +90,23 @@ require 'header.php';
                <div class="table-responsive mt-5 mb-5">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                          <li class="nav-item" role="presentation">
-                              <button class="nav-link active" id="deposit-tab" data-bs-toggle="tab" data-bs-target="#deposit" type="button" role="tab" aria-controls="deposit" aria-selected="true">Deposit</button>
+                              <button class="nav-link active" id="deposit-tab" data-bs-toggle="tab"
+                                   data-bs-target="#deposit" type="button" role="tab" aria-controls="deposit"
+                                   aria-selected="true">Deposit</button>
                          </li>
                          <li class="nav-item" role="presentation">
-                              <button class="nav-link" id="withdrawal-tab" data-bs-toggle="tab" data-bs-target="#withdrawal" type="button" role="tab" aria-controls="withdrawal" aria-selected="false">Withdrawal</button>
+                              <button class="nav-link" id="withdrawal-tab" data-bs-toggle="tab"
+                                   data-bs-target="#withdrawal" type="button" role="tab" aria-controls="withdrawal"
+                                   aria-selected="false">Withdrawal</button>
                          </li>
                          <li class="nav-item" role="presentation">
-                              <button class="nav-link" id="others-tab" data-bs-toggle="tab" data-bs-target="#others" type="button" role="tab" aria-controls="others" aria-selected="false">Others</button>
+                              <button class="nav-link" id="others-tab" data-bs-toggle="tab" data-bs-target="#others"
+                                   type="button" role="tab" aria-controls="others" aria-selected="false">Others</button>
                          </li>
                     </ul>
                     <div class="tab-content" id="myTabContent">
-                         <div class="tab-pane fade show active" id="deposit" role="tabpanel" aria-labelledby="deposit-tab">
+                         <div class="tab-pane fade show active" id="deposit" role="tabpanel"
+                              aria-labelledby="deposit-tab">
                               <table class="table table-bordered">
                                    <thead>
                                         <tr>
@@ -115,42 +121,46 @@ require 'header.php';
                                         <?php
                                         if (!$deposits) {
                                         ?>
-                                             <td colspan="5" class="text-center">
-                                                  <span class="text-danger">No Deposits</span>
-                                             </td>
+                                        <td colspan="5" class="text-center">
+                                             <span class="text-danger">No Deposits</span>
+                                        </td>
                                         <?php
                                         }
                                         foreach ($deposits as $i => $deposit) {
                                         ?>
-                                             <tr>
-                                                  <td>
-                                                       <?php echo ($deposit['amount']); ?>
-                                                  </td>
-                                                  <td>
-                                                       <?php echo ($deposit['payment_mode']); ?>
-                                                  </td>
-                                                  <td>
-                                                       <?php echo ($deposit['status']); ?>
-                                                  </td>
-                                                  <td>
-                                                       <?php echo (date('D m M, Y', $deposit['date'])); ?>
-                                                  </td>
-                                                  <td class="text-center">
-                                                       <button data-proof-image="<?php echo $deposit['prof_image']; ?>" class="btn btn-info btn-view-proof me-2">View proof</button>
-                                                       <form method="post" class="d-inline me-2" onsubmit="return confirm('Are you sure you want to confirm this transaction?')">
-                                                            <input type="hidden" name="action" value="confirm_deposit" />
-                                                            <input type="hidden" name="trans_action" value="1" />
-                                                            <input type="hidden" name="trans_id" value="<?php echo $deposit['id']; ?>" />
-                                                            <button class="btn btn-success">Confirm</button>
-                                                       </form>
-                                                       <form method="post" class="d-inline" onsubmit="return confirm('Are you sure you want to reject this transaction?')">
-                                                            <input type="hidden" name="action" value="confirm_deposit" />
-                                                            <input type="hidden" name="trans_action" value="0" />
-                                                            <input type="hidden" name="trans_id" value="<?php echo $deposit['id']; ?>" />
-                                                            <button class="btn btn-danger">Reject</button>
-                                                       </form>
-                                                  </td>
-                                             </tr>
+                                        <tr>
+                                             <td>
+                                                  <?php echo ($deposit['amount']); ?>
+                                             </td>
+                                             <td>
+                                                  <?php echo ($deposit['payment_mode']); ?>
+                                             </td>
+                                             <td>
+                                                  <?php echo ($deposit['status']); ?>
+                                             </td>
+                                             <td>
+                                                  <?php echo (date('D m M, Y', $deposit['date'])); ?>
+                                             </td>
+                                             <td class="text-center">
+                                                  <button data-proof-image="<?php echo $deposit['prof_image']; ?>" class="btn btn-info btn-view-proof me-2">View proof</button>
+                                                  <form method="post" class="d-inline me-2"
+                                                       onsubmit="return confirm('Are you sure you want to confirm this transaction?')">
+                                                       <input type="hidden" name="action" value="confirm_deposit" />
+                                                       <input type="hidden" name="trans_action" value="1" />
+                                                       <input type="hidden" name="trans_id"
+                                                            value="<?php echo $deposit['id']; ?>" />
+                                                       <button class="btn btn-success">Confirm</button>
+                                                  </form>
+                                                  <form method="post" class="d-inline"
+                                                       onsubmit="return confirm('Are you sure you want to reject this transaction?')">
+                                                       <input type="hidden" name="action" value="confirm_deposit" />
+                                                       <input type="hidden" name="trans_action" value="0" />
+                                                       <input type="hidden" name="trans_id"
+                                                            value="<?php echo $deposit['id']; ?>" />
+                                                       <button class="btn btn-danger">Reject</button>
+                                                  </form>
+                                             </td>
+                                        </tr>
                                         <?php } ?>
                                    </tbody>
                               </table>
@@ -171,46 +181,50 @@ require 'header.php';
                                         <?php
                                         if (!$withdrawals) {
                                         ?>
-                                             <td colspan="5" class="text-center">
-                                                  <span class="text-danger">No Withdrawals</span>
-                                             </td>
+                                        <td colspan="5" class="text-center">
+                                             <span class="text-danger">No Withdrawals</span>
+                                        </td>
                                         <?php
                                         }
                                         foreach ($withdrawals as $i => $withdrawal) {
                                         ?>
-                                             <tr>
-                                                  <td>
-                                                       <?php echo ($withdrawal['amount']); ?>
-                                                  </td>
-                                                  <td>
-                                                       <?php echo ($withdrawal['charges']); ?>
-                                                  </td>
-                                                  <td>
-                                                       <?php echo ($withdrawal['receive_mode']); ?>
-                                                  </td>
-                                                  <td>
-                                                       <?php echo ($withdrawal['status']); ?>
-                                                  </td>
-                                                  <td>
-                                                       <?php echo ($withdrawal['date']); ?>
-                                                  </td>
-                                                  <td class="text-center">
-                                                       <button data-proof-img="<?php echo $deposit['prof_image']; ?>" class="btn btn-info btn-view-proof me-2">View
-                                                            proof</button>
-                                                       <form method="post" class="d-inline me-2" onsubmit="return confirm('Are you sure you want to confirm this transaction?')">
-                                                            <input type="hidden" name="action" value="confirm_withdrawal" />
-                                                            <input type="hidden" name="trans_action" value="1" />
-                                                            <input type="hidden" name="trans_id" value="<?php echo $deposit['id']; ?>" />
-                                                            <button class="btn btn-success">Confirm</button>
-                                                       </form>
-                                                       <form method="post" class="d-inline" onsubmit="return confirm('Are you sure you want to reject this transaction?')">
-                                                            <input type="hidden" name="action" value="confirm_withdrawal" />
-                                                            <input type="hidden" name="trans_action" value="0" />
-                                                            <input type="hidden" name="trans_id" value="<?php echo $deposit['id']; ?>" />
-                                                            <button class="btn btn-danger">Reject</button>
-                                                       </form>
-                                                  </td>
-                                             </tr>
+                                        <tr>
+                                             <td>
+                                                  <?php echo ($withdrawal['amount']); ?>
+                                             </td>
+                                             <td>
+                                                  <?php echo ($withdrawal['charges']); ?>
+                                             </td>
+                                             <td>
+                                                  <?php echo ($withdrawal['receive_mode']); ?>
+                                             </td>
+                                             <td>
+                                                  <?php echo ($withdrawal['status']); ?>
+                                             </td>
+                                             <td>
+                                                  <?php echo ($withdrawal['date']); ?>
+                                             </td>
+                                             <td class="text-center">
+                                                  <button data-proof-img="<?php echo $deposit['prof_image']; ?>" class="btn btn-info btn-view-proof me-2">View
+                                                       proof</button>
+                                                  <form method="post" class="d-inline me-2"
+                                                       onsubmit="return confirm('Are you sure you want to confirm this transaction?')">
+                                                       <input type="hidden" name="action" value="confirm_withdrawal" />
+                                                       <input type="hidden" name="trans_action" value="1" />
+                                                       <input type="hidden" name="trans_id"
+                                                            value="<?php echo $deposit['id']; ?>" />
+                                                       <button class="btn btn-success">Confirm</button>
+                                                  </form>
+                                                  <form method="post" class="d-inline"
+                                                       onsubmit="return confirm('Are you sure you want to reject this transaction?')">
+                                                       <input type="hidden" name="action" value="confirm_withdrawal" />
+                                                       <input type="hidden" name="trans_action" value="0" />
+                                                       <input type="hidden" name="trans_id"
+                                                            value="<?php echo $deposit['id']; ?>" />
+                                                       <button class="btn btn-danger">Reject</button>
+                                                  </form>
+                                             </td>
+                                        </tr>
                                         <?php } ?>
                                    </tbody>
                               </table>
@@ -234,109 +248,108 @@ require 'header.php';
                                         </tr>
                                    </tbody>
                               </table>
-                              <!-- Page Footer-->
-                              <footer class="position-absolute bottom-0 bg-darkBlue text-white text-center py-3 w-100 text-xs" id="footer">
-                                   <div class="container-fluid">
-                                        <div class="row gy-2">
-                                             <div class="col-sm-6 text-sm-start">
-                                                  <p class="mb-0">Your company &copy; 2017-2022</p>
-                                             </div>
-                                             <div class="col-sm-6 text-sm-end">
-                                                  <p class="mb-0">Design by <a href="https://bootstrapious.com/p/admin-template" class="text-white text-decoration-none">Bootstrapious</a></p>
-                                                  <!-- Please do not remove the backlink to us unless you support further theme's development at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
-                                             </div>
-                                        </div>
-                                   </div>
-                              </footer>
+
                          </div>
                     </div>
                </div>
-               <!-- modal update password -->
-               <div class="modal" id="modal_bal" tabindex="-1">
-                    <div class="modal-dialog modal-dialog-centered">
-                         <div class="modal-content">
-                              <div class="modal-header">
-                                   <h5 class="modal-title">Update Balance</h5>
-                                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                              </div>
-                              <div class="modal-body">
+          </div>
+     </section>
+     <!-- Page Footer-->
 
-                              </div>
-                              <div class="modal-footer">
-                                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                   <button form="form_upd_bal" class="btn btn-success">Update</button>
-                              </div>
-                         </div>
-                    </div>
+</div>
+</div>
+</div>
+<!-- modal view proof-->
+<div class="modal" id="modal_view_proof" tabindex="-1">
+     <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+               <div class="modal-header">
+                    <h5 class="modal-title">Proof of payment</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                </div>
-               <!-- JavaScript files-->
-               <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-               <script src="vendor/chart.js/Chart.min.js"></script>
-               <script src="vendor/just-validate/js/just-validate.min.js"></script>
-               <script src="vendor/choices.js/public/assets/scripts/choices.min.js"></script>
-               <!-- Main File-->
-               <script src="js/front.js"></script>
-               <script>
-                    // ------------------------------------------------------- //
-                    //   Inject SVG Sprite - 
-                    //   see more here 
-                    //   https://css-tricks.com/ajaxing-svg-sprite/
-                    // ------------------------------------------------------ //
-                    function injectSvgSprite(path) {
+               <div class="modal-body">
 
-                         var ajax = new XMLHttpRequest();
-                         ajax.open("GET", path, true);
-                         ajax.send();
-                         ajax.onload = function(e) {
-                              var div = document.createElement("div");
-                              div.className = 'd-none';
-                              div.innerHTML = ajax.responseText;
-                              document.body.insertBefore(div, document.body.childNodes[0]);
-                         }
+               </div>
+               <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-info" data-bs-dismiss="modal">Thank you</button>
+               </div>
+          </div>
+     </div>
+</div>
+<!-- JavaScript files-->
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="vendor/chart.js/Chart.min.js"></script>
+<script src="vendor/just-validate/js/just-validate.min.js"></script>
+<script src="vendor/choices.js/public/assets/scripts/choices.min.js"></script>
+<!-- Main File-->
+<script src="js/front.js"></script>
+<script>
+     // ------------------------------------------------------- //
+     //   Inject SVG Sprite - 
+     //   see more here 
+     //   https://css-tricks.com/ajaxing-svg-sprite/
+     // ------------------------------------------------------ //
+     function injectSvgSprite(path) {
+
+          var ajax = new XMLHttpRequest();
+          ajax.open("GET", path, true);
+          ajax.send();
+          ajax.onload = function (e) {
+               var div = document.createElement("div");
+               div.className = 'd-none';
+               div.innerHTML = ajax.responseText;
+               document.body.insertBefore(div, document.body.childNodes[0]);
+          }
+     }
+     // this is set to BootstrapTemple website as you cannot 
+     // inject local SVG sprite (using only 'icons/orion-svg-sprite.svg' path)
+     // while using file:// protocol
+     // pls don't forget to change to your domain :)
+     injectSvgSprite('https://bootstraptemple.com/files/icons/orion-svg-sprite.svg');
+</script>
+<!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css"
+     integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<script src="./toastr/toastr.min.js"> </script>
+<script>
+     document.addEventListener('DOMContentLoaded', function () {
+          //destructure array
+          $('.btn-view-proof') && [...$('.btn-view-proof')].forEach(el => {
+               $(el).on('click', function () {
+                    //show the modal
+                    new bootstrap.Modal('#modal_view_proof').show();
+                    if (!this.getAttribute("data-proof-image")) {
+                         $('#modal_view_proof .modal-body').html(`
+                         <div class="alert alert-info p-3 text-center">
+                              <p class="m-0">This user has not uploaded a <b>proof of payment</b></p>
+                         </div>
+                    `);
+                    } else {
+                         $('#modal_view_proof .modal-body').html(`
+                         <div class="p-3"> 
+                              <img src="${'../user-dashbord/uploads/' + this.getAttribute("data-proof-image")}" class="img-fluid mb-3" style="border-radius:10px" />
+                              <a download href="../user-dashbord/uploads/${this.getAttribute("data-proof-image")}" class="btn btn-success">Download</a>
+                         </div>
+                    `);
                     }
-                    // this is set to BootstrapTemple website as you cannot 
-                    // inject local SVG sprite (using only 'icons/orion-svg-sprite.svg' path)
-                    // while using file:// protocol
-                    // pls don't forget to change to your domain :)
-                    injectSvgSprite('https://bootstraptemple.com/files/icons/orion-svg-sprite.svg');
-               </script>
-               <!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
-               <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-               <script src="./toastr/toastr.min.js"> </script>
-               <script>
-                    document.addEventListener('DOMContentLoaded', function() {
-                         $('#btn_upd_pwd').on('click', function() {
-                              //show the modal
-                              new bootstrap.Modal('#modal_pwd').show()
-                         })
-                         $('#btn_upd_bal').on('click', function() {
-                              //show the modal
-                              new bootstrap.Modal('#modal_bal').show()
-                         })
-
-                         const myForm = new octaValidate('form_upd_pass')
-                         $('#form_upd_pass').on('submit', (e) => {
-                              e.preventDefault()
-                              if (myForm.validate()) {
-                                   e.currentTarget.submit()
-                              }
-                         })
-                    })
-               </script>
-               <script>
+               })
+          })
+     })
+</script>
+<script>
+          <?php
+          if (isset($success) && isset($msg)) {
+               if ($success && !empty($msg)) {
+          ?>
+                    toastr.success("<?php echo $msg; ?>")
                     <?php
-                    if (isset($success) && isset($msg)) {
-                         if ($success && !empty($msg)) {
-                    ?>
-                              toastr.success("<?php echo $msg; ?>")
-                         <?php
-                         } elseif (!$success && !empty($msg)) { ?>
-                              toastr.error("<?php echo $msg; ?>")
-                    <?php
-                         }
-                    }
-                    ?>
-               </script>
-               </body>
+               } elseif (!$success && !empty($msg)) { ?>
+               toastr.error("<?php echo $msg; ?>")
+               <?php
+               }
+          }
+               ?>
+</script>
+</body>
 
-               </html>
+</html>
