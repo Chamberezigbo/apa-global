@@ -65,7 +65,7 @@ require('header.php');
                                                   <a href="<?php print('./user.php?id=' . $user['id']) ?>" class="btn btn-info">Profile</a>
                                              </td>
                                              <td>
-                                                  <a href="<?php print('./transactions.php?id=' . $user['id']) ?>" class="btn btn-info">Transactions</a>
+                                                  <a href="<?php print('./transactions.php?id=' . $user['id']) ?>" class="btn btn-info">Pending Transactions</a>
                                              </td>
                                         </tr>
                                    <?php  } ?>

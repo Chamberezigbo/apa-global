@@ -1,19 +1,55 @@
 <?php
 require_once('app.php');
-if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['profile'])) {
+$user_Id = $_SESSION['user_id'];
+
+//success / failure error
+$msg = $success = '';
+if (isset($_SESSION['success']) && isset($_SESSION['msg'])) {
+     // || checks for boolean values only
+     $success = $_SESSION['success'] || false;
+     $msg = $_SESSION['msg'];
+     //remove the session
+     unset($_SESSION['success']);
+     unset($_SESSION['msg']);
+}
+
+if ($_SERVER['REQUEST_METHOD'] == "POST" && $_POST['action'] == "updateProfile") {
      $result = $db->Update(
-          "UPDATE users SET fullName = :fullName, phone = :phone, username = :username, balance = :balance WHERE users.id = :id",
-          ['fullName' => $_POST['phone'], 'phone' => $_POST['phone'], 'username' => $_POST['username'], 'balance' => $_POST['username'], 'id' => $user_Id]
+          "UPDATE users SET fullName = :fullName, phone = :phone WHERE user_id = :id",
+          ['fullName' => $_POST['fullName'], 'phone' => $_POST['phone'], 'id' => $user_Id]
      );
      if ($result) {
           # code...
-          print('<script>
-          document.addEventListener("DOMContentLoaded", function(){
-               toastr.error("Update successfully");
-               setTimeout(function() {
-                    toastr.clear()
-               }, 3000);
-     });</script>');
+          $_SESSION['success'] = true;
+          $_SESSION['msg'] = "Update successfully";
+          header("Location:./profile.php");
+          exit();
+     } else {
+          $_SESSION['success'] = true;
+          $_SESSION['msg'] = "Update not successfully";
+          header("Location:./profile.php");
+          exit();
+     }
+}
+
+if ($_SERVER['REQUEST_METHOD'] == "POST" && $_POST['action'] == "updatePass") {
+     print($_POST['pass']);
+     die();
+     $result = $db->Update(
+          "UPDATE users SET password = :password WHERE user_id = :id",
+          ['password' => $_POST['pass'], 'id' => $user_Id]
+     );
+     if ($result) {
+          # code...
+          $_SESSION['success'] = true;
+          $_SESSION['msg'] = "Paassword Updated successfully";
+          header("Location:./profile.php");
+          exit();
+     } else {
+          $_SESSION['success'] = true;
+          $_SESSION['msg'] = "Update not successfully";
+          header("Location:./profile.php");
+          exit();
      }
 }
 include("header.php");
@@ -80,22 +116,16 @@ include("header.php");
                                                                  </div>
                                                                  <div class="mb-3">
                                                                       <label for="disabledTextInput" class="form-label">FullName</label>
-                                                                      <input type="text" name="fullNaame" class="form-control" value="<?= $result['fullName'] ?>">
+                                                                      <input type="text" name="fullName" class="form-control" value="<?= $result['fullName'] ?>">
                                                                  </div>
                                                                  <div class="mb-3">
                                                                       <label for="disabledTextInput" class="form-label">Phone</label>
                                                                       <input type="text" name="phone" class="form-control" value="<?= $result['phone'] ?>">
                                                                  </div>
-                                                            </div>
-                                                            <div class="col-sm-12 col-md-6">
-                                                                 <div class="mb-3">
-                                                                      <label for="disabledTextInput" class="form-label">Username</label>
-                                                                      <input type="text" name="username" class="form-control" value="<?= $result['username'] ?>">
-                                                                 </div>
-
+                                                                 <input type="hidden" name="action" value="updateProfile">
                                                             </div>
                                                        </div>
-                                                       <button type="submit" name="profile" class="btn btn-primary">Update</button>
+                                                       <input type="submit" class="btn btn-primary" value="Update">
                                              <?php
                                                   }
                                              }
@@ -119,21 +149,22 @@ include("header.php");
                                         <h3 class="h4 mb-0">Change Password</h3>
                                    </div>
                                    <div class="card-body">
-                                        <form method="post" action="">
+                                        <form method="post" action="" id="form_upd_pass">
 
                                              <div class="row">
                                                   <div class="col-sm-12">
                                                        <div class="mb-3">
-                                                            <label for="disabledTextInput" class="form-label">Password</label>
-                                                            <input type="text" name="pass" class="form-control">
+                                                            <label>New Password</label>
+                                                            <input autocomplete="off" name="pass" id="inp_pass" type="password" class="form-control" placeholder="Enter new password" octavalidate="R" />
                                                        </div>
                                                        <div class="mb-3">
-                                                            <label for="disabledTextInput" class="form-label">Comfirm Password</label>
-                                                            <input type="text" name="confirmPass" class="form-control">
+                                                            <label>Confirm password</label>
+                                                            <input autocomplete="off" id="inp_conpass" type="password" class="form-control" placeholder="Re-enter password" equalto="inp_pass" octavalidate="R" ov-equalto:msg="Both passwords do not match" />
                                                        </div>
                                                   </div>
+                                                  <input type="hidden" name="action" value="updatePass">
                                              </div>
-                                             <button type="submit" class="btn btn-primary">Update</button>
+                                             <input type="submit" class="btn btn-primary" value="Update Password">
 
                                         </form>
                                    </div>
@@ -187,3 +218,33 @@ include("header.php");
 </div>
 </div>
 </div>
+<script>
+     document.addEventListener('DOMContentLoaded', function() {
+
+          const myForm = new octaValidate('form_upd_pass')
+          $('#form_upd_pass').on('submit', (e) => {
+               e.preventDefault()
+               if (myForm.validate()) {
+                    e.currentTarget.submit()
+               }
+          })
+     })
+</script>
+
+<script>
+     <?php
+     if (isset($success) && isset($msg)) {
+          if ($success && !empty($msg)) {
+     ?>
+               toastr.success("<?php echo $msg; ?>")
+          <?php
+          } elseif (!$success && !empty($msg)) { ?>
+               toastr.error("<?php echo $msg; ?>")
+     <?php
+          }
+     }
+     ?>
+</script>
+</body>
+
+</html>

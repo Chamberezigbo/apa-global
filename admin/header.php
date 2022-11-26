@@ -148,9 +148,17 @@
                                    <i class="fa-solid fa-arrows-rotate me-xl-2 fa-1x"></i>
                                    </svg>Referels</a>
                          </li>
-                         <li class="sidebar-item"><a class="sidebar-link" href="profit.php">
+                         <li class="sidebar-item"><a class="sidebar-link" href="add-bonus.php">
                                    <i class="fa-solid fa-arrows-rotate me-xl-2 fa-1x"></i>
-                                   </svg>Add Profit</a>
+                                   </svg>bonus</a>
+                         </li>
+                         <li class="sidebar-item"><a class="sidebar-link" href="add-profit.php">
+                                   <i class="fa-solid fa-arrows-rotate me-xl-2 fa-1x"></i>
+                                   </svg>Profit</a>
+                         </li>
+                         <li class="sidebar-item"><a class="sidebar-link" href="all-transactions.php">
+                                   <i class="fa-solid fa-arrows-rotate me-xl-2 fa-1x"></i>
+                                   </svg>All Transactions</a>
                          </li>
                     </ul>
                     <!-- <!-- <span class="text-uppercase text-gray-400 text-xs letter-spacing-0 mx-3 px-2 heading">Extras</span>

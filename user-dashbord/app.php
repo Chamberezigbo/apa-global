@@ -5,7 +5,7 @@ require("../process/pdo.php");
 error_reporting(0);
 $image = "../admin-dashboard/" . $_SESSION['image'];
 if (!$_SESSION['auth']) {
-    header('location:../index.php');
+     header('location:./logout.php');
     die();
 } else {
     $currentTime = time();

@@ -1,19 +1,15 @@
 <?php
 session_start();
 
-$id = (isset($_GET) && isset($_GET['id'])) ? htmlspecialchars($_GET['id']) : exit();
 
 require('../process/pdo.php');
 
 $db = new DatabaseClass();
 
-$user = $db->SelectOne("SELECT * FROM users WHERE users.id = :id", ['id' => $id]);
-//if user does not exist, kill the page
-(!$user) && exit();
 
-$deposits = $db->SelectAll("SELECT * FROM deposit WHERE deposit.user_id = :uid AND deposit.action_type IS NULL", ['uid' => $user['user_id']]);
-$withdrawals = $db->SelectAll("SELECT * FROM withdrawal WHERE withdrawal.user_id = :uid AND withdrawal.action_type IS NULL", ['uid' => $user['user_id']]);
-$bonus = $db->SelectAll("SELECT * FROM bonus WHERE bonus.userId = :uid", ['uid' => $user['user_id']]);
+$deposits = $db->SelectAll("SELECT * FROM deposit ", []);
+$withdrawals = $db->SelectAll("SELECT * FROM withdrawal", []);
+$bonus = $db->SelectAll("SELECT * FROM bonus", []);
 
 //success / failure error
 $msg = $success = '';
@@ -24,44 +20,6 @@ if (isset($_SESSION['success']) && isset($_SESSION['msg'])) {
      //remove the session
      unset($_SESSION['success']);
      unset($_SESSION['msg']);
-}
-if ($_SERVER['REQUEST_METHOD'] == "POST") {
-     if (isset($_POST['action']) && !empty($_POST['action'])) {
-          $action = $_POST['action'];
-          //confirm deposit transaction
-          if ($action == 'confirm_deposit' && $user) {
-               //check if transaction exists
-               $checkTrans = $db->SelectOne("SELECT * FROM deposit WHERE deposit.user_id = :uid AND deposit.action_type IS NULL ", ['uid' => $user['user_id']]);
-               //check if transaction exists
-               if ($checkTrans) {
-                    $trans_action = (isset($_POST['trans_action']) && !empty($_POST['trans_action']) && intval($_POST['trans_action']) == 1) ? 'confirmed' : 'rejected';
-                    $currentBAl = $user['balance'] + $checkTrans['amount'];
-                    $db->Update("UPDATE users SET balance = :bal WHERE user_id = :uid", ['bal' => $currentBAl, 'uid' => $user['user_id']]);
-                    $db->Update("UPDATE deposit SET status = :st, action_type = :type WHERE deposit.id = :id", ['st' => $trans_action, 'id' => $checkTrans['id'], 'type' => "Confirm"]);
-                    $_SESSION['success'] = true;
-                    $_SESSION['msg'] = "Transaction has been updated successfully";
-                    //reset post array
-                    header("Location: ./transactions.php?id=$id");
-                    exit();
-               }
-          }
-          if ($action == 'confirm_withdrawal' && $user) {
-               //check if transaction exists
-               $checkTrans = $db->SelectOne("SELECT * FROM withdrawal WHERE withdrawal.user_id = :uid AND withdrawal.action_type IS NULL", ['uid' => $user['user_id']]);
-               //check if transaction exists
-               if ($checkTrans) {
-                    $trans_action = (isset($_POST['trans_action']) && !empty($_POST['trans_action']) && intval($_POST['trans_action']) == 1) ? 'confirmed' : 'rejected';
-                    // minunuse from user Balance</
-                    $currentBAl = $user['balance'] - $checkTrans['amount'];
-                    $db->Update("UPDATE withdrawal SET status = :st,action_type = :type WHERE withdrawal.id = :id", ['st' => $trans_action, 'id' => $checkTrans['id'], 'type' => "Confirm"]);
-                    $_SESSION['success'] = true;
-                    $_SESSION['msg'] = "Transaction has been updated successfully";
-                    //reset post array
-                    header("Location: ./transactions.php?id=$id ");
-                    exit();
-               }
-          }
-     }
 }
 
 
@@ -109,7 +67,6 @@ require 'header.php';
                                              <th>Payment mode </th>
                                              <th>Status</th>
                                              <th>Date</th>
-                                             <th class="text-center">Action</th>
                                         </tr>
                                    </thead>
                                    <tbody>
@@ -136,21 +93,6 @@ require 'header.php';
                                                   <td>
                                                        <?php echo (date('D m M, Y', $deposit['date'])); ?>
                                                   </td>
-                                                  <td class="text-center">
-                                                       <button data-proof-image="<?php echo $deposit['prof_image']; ?>" class="btn btn-info btn-view-proof me-2">View proof</button>
-                                                       <form method="post" class="d-inline me-2" onsubmit="return confirm('Are you sure you want to confirm this transaction?')">
-                                                            <input type="hidden" name="action" value="confirm_deposit" />
-                                                            <input type="hidden" name="trans_action" value="1" />
-                                                            <input type="hidden" name="trans_id" value="<?php echo $deposit['id']; ?>" />
-                                                            <button class="btn btn-success">Confirm</button>
-                                                       </form>
-                                                       <form method="post" class="d-inline" onsubmit="return confirm('Are you sure you want to reject this transaction?')">
-                                                            <input type="hidden" name="action" value="confirm_deposit" />
-                                                            <input type="hidden" name="trans_action" value="0" />
-                                                            <input type="hidden" name="trans_id" value="<?php echo $deposit['id']; ?>" />
-                                                            <button class="btn btn-danger">Reject</button>
-                                                       </form>
-                                                  </td>
                                              </tr>
                                         <?php } ?>
                                    </tbody>
@@ -165,7 +107,6 @@ require 'header.php';
                                              <th>Payment mode </th>
                                              <th>Status</th>
                                              <th>Date</th>
-                                             <th class="tect-center" colspan="2">Action</th>
                                         </tr>
                                    </thead>
                                    <tbody>
@@ -195,22 +136,6 @@ require 'header.php';
                                                   <td>
                                                        <?php echo ($withdrawal['date']); ?>
                                                   </td>
-                                                  <td class="text-center">
-                                                       <button data-proof-img="<?php echo $deposit['prof_image']; ?>" class="btn btn-info btn-view-proof me-2">View
-                                                            proof</button>
-                                                       <form method="post" class="d-inline me-2" onsubmit="return confirm('Are you sure you want to confirm this transaction?')">
-                                                            <input type="hidden" name="action" value="confirm_withdrawal" />
-                                                            <input type="hidden" name="trans_action" value="1" />
-                                                            <input type="hidden" name="trans_id" value="<?php echo $deposit['id']; ?>" />
-                                                            <button class="btn btn-success">Confirm</button>
-                                                       </form>
-                                                       <form method="post" class="d-inline" onsubmit="return confirm('Are you sure you want to reject this transaction?')">
-                                                            <input type="hidden" name="action" value="confirm_withdrawal" />
-                                                            <input type="hidden" name="trans_action" value="0" />
-                                                            <input type="hidden" name="trans_id" value="<?php echo $deposit['id']; ?>" />
-                                                            <button class="btn btn-danger">Reject</button>
-                                                       </form>
-                                                  </td>
                                              </tr>
                                         <?php } ?>
                                    </tbody>
@@ -226,30 +151,28 @@ require 'header.php';
                                         </tr>
                                    </thead>
                                    <tbody>
-                                        <tr>
-                                             <?php
-                                             if (!$bonus) {
-                                             ?>
-                                                  <td colspan="5" class="text-center">
-                                                       <span class="text-danger">No Bonus</span>
+                                        <?php
+                                        if (!$bonus) {
+                                        ?>
+                                             <td colspan="5" class="text-center">
+                                                  <span class="text-danger">No Bonus</span>
+                                             </td>
+                                        <?php
+                                        }
+                                        foreach ($bonus as $i => $bonu) {
+                                        ?>
+                                             <tr>
+                                                  <td>
+                                                       <?php echo ($bonu['amount']); ?>
                                                   </td>
-                                             <?php
-                                             }
-                                             foreach ($bonus as $i => $bonu) {
-                                             ?>
-                                        <tr>
-                                             <td>
-                                                  <?php echo ($bonu['amount']); ?>
-                                             </td>
-                                             <td>
-                                                  <?php echo ($bonu['nirration']); ?>
-                                             </td>
-                                             <td>
-                                                  <?php echo (date('d-m-Y', $bonu['date'])); ?>
-                                             </td>
-                                        </tr>
-                                   <?php } ?>
-                                   </tr>
+                                                  <td>
+                                                       <?php echo ($bonu['nirration']); ?>
+                                                  </td>
+                                                  <td>
+                                                       <?php echo (date('d-m-Y', $bonu['date'])); ?>
+                                                  </td>
+                                             </tr>
+                                        <?php } ?>
                                    </tbody>
                               </table>
 

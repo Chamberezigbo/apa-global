@@ -19,10 +19,10 @@ $myForm = new octaValidate('bonus', $options);
 $valRules = array(
      "nira" => array(
           ["R", "Your username is required"],
-          ["DIGITS", "Phone number must be digits"]
      ),
      "amount" => array(
           ["R", "Your Email Address is required"],
+          ["DIGITS", "Phone number must be digits"]
      ),
 );
 //success / failure error
@@ -35,38 +35,44 @@ if (isset($_SESSION['success']) && isset($_SESSION['msg'])) {
      unset($_SESSION['success']);
      unset($_SESSION['msg']);
 }
-
-do {
-     if ($myForm->validateFields($valRules, $_POST)) {
-          $result = $db->Insert(
-               "INSERT INTO bonus usersId = :userId, amount = :amount, nirration = :nirration, date = :date",
-               [
-                    ":userId" => $id,
-                    ":amount" => $_POST["nira"],
-                    ":nirration" => $_POST["nirration"],
-                    ":date" => time()
-               ]
-          );
-          if ($result) {
-               $users = $db->SelectOne("SELECT * FROM users WHERE userId = :userId", ["userId" => $id]);
-               if ($users) {
-                    $balance = $users['balance'];
-                    $balance = $balance + $_POST["amount"];
-                    $update = $db->Update("UPDATE users SET balance = :balance WHERE userId = :userId", ['balance' => $balance, 'userId' => $id]);
+try {
+     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+          if ($myForm->validateFields($valRules, $_POST)) {
+               $result = $db->Insert(
+                    "INSERT INTO bonus (userId, amount, nirration, date) VALUES (:userId, :amount, :nirration, :date)",
+                    [
+                         "userId" => $id,
+                         "amount" => $_POST["amount"],
+                         "nirration" => $_POST["nira"],
+                         "date" => time()
+                    ]
+               );
+               if ($result) {
+                    $users = $db->SelectOne("SELECT * FROM users WHERE user_id = :userId", ["userId" => $id]);
+                    if ($users) {
+                         $balance = $users['balance'];
+                         $balance = $balance + $_POST["amount"];
+                         $update = $db->Update("UPDATE users SET balance = :balance WHERE user_id = :userId", ['balance' => $balance, 'userId' => $id]);
+                    }
+                    $_SESSION['success'] = true;
+                    $_SESSION['msg'] = "Bonus added successfully";
+                    //reset post array
+                    header("Location: ./profit.php");
+                    exit();
                }
-               $_SESSION['success'] = true;
-               $_SESSION['msg'] = "Bonus added successfully";
-               //reset post array
-               header("Location: ./profit.php");
-               exit();
-          }
-     } else {
-          print('<script>
+          } else {
+               print('<script>
                document.addEventListener("DOMContentLoaded", function(){
-                    showErrors(' . json_encode($myForm->getErrors()) . ');
+                    showErrors(' . json_encode($myForm->getErrors()) .
+                    ');
           });</script>');
+          }
      }
-} while ($_SERVER['REQUEST_METHOD'] == 'POST');
+} catch (Exception $e) {
+     print($e);
+}
+
+
 
 
 require('header.php');
@@ -76,7 +82,7 @@ require('header.php');
      <!-- Page Header-->
      <header class="bg-white shadow-sm px-4 py-3 z-index-20">
           <div class="container-fluid px-0">
-               <h2 class="mb-0 p-1">Profit</h2>
+               <h2 class="mb-0 p-1">Add Bonus</h2>
           </div>
      </header>
      <!-- Breadcrumb-->
@@ -102,7 +108,7 @@ require('header.php');
                          <input type="number" name="amount" class="form-control">
                     </div>
                     <div class="col-12 px-auto">
-                         <button class="btn btn-primary">Sign in</button>
+                         <button class="btn btn-primary">Update</button>
                     </div>
                </form>
 

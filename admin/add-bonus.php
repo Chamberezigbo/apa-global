@@ -62,9 +62,6 @@ require('header.php');
                                              <td><?php print(stripslashes($user['email'])) ?></td>
                                              <td><?php print(stripslashes($user['phone'])) ?></td>
                                              <td>
-                                                  <a href="<?php print('./add-profit?id=' . $user['id']) ?>" class="btn btn-info">Add Profit</a>
-                                             </td>
-                                             <td>
                                                   <a href="<?php print('./bonus.php?id=' . $user['user_id']) ?>" class="btn btn-info">Add Bonus</a>
                                              </td>
                                         </tr>

@@ -1,6 +1,6 @@
-<?php 
+<?php
 require_once('app.php');
-include "header.php"; 
+include "header.php";
 ?>
 <div class="content-inner w-100">
      <!-- Page Header-->
@@ -164,12 +164,27 @@ include "header.php";
                                                        </tr>
                                                   </thead>
                                                   <tbody>
-                                                       <tr>
-                                                            <th>$<?= $bonus ?></th>
-                                                            <td>Bonus</td>
-                                                            <td>Signup Bonus</td>
-                                                            <td>Thu, Nov 17, 2022 12:41 PM</td>
-                                                       </tr>
+                                                       <?php
+                                                       $results = $db->SelectAll("SELECT * FROM bonus WHERE userid = :userId", ['userId' => $user_Id]);
+                                                       if ($results && count($results)) {
+                                                            foreach ($results as $i => $result) {
+                                                       ?>
+                                                                 <tr>
+                                                                      <th><?= $result['amount'] ?></th>
+                                                                      <th><?= 'Bonus' ?></th>
+                                                                      <td><?= $result['nirration'] ?></td>
+                                                                      <td><?= date('d-m-y', $result['date'])  ?></td>
+                                                                 </tr>
+                                                            <?php
+                                                            }
+                                                       } else {
+                                                            ?>
+                                                            <td colspan="5" class="text-center">
+                                                                 <span class="text-danger">No data found</span>
+                                                            </td>
+                                                       <?php
+                                                       };
+                                                       ?>
                                                   </tbody>
                                              </table>
                                         </div>
