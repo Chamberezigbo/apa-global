@@ -2,10 +2,10 @@
 <footer class="site-footer">
      <div class="container">
           <div class="row widget-area">
-               <div class="col-lg-3 col-xs-6  widget-col about-widget-col">
+               <div class="col-lg-2 col-xs-6  widget-col about-widget-col">
                     <div class="widget newsletter-widget">
                          <h2>APA-Finacial</h2>
-                         <p>admin@apa.org</p>
+                         <p>customercare@apa-global.org</p>
                          <div class="inner">
                               <p>Subscribe to our Email Newsletter</p>
                               <form>
@@ -19,14 +19,20 @@
                          </div>
                     </div>
                </div>
-               <div class="col-lg-3 offset-lg-1 col-xs-6 widget-col">
+               <div class="col-lg-2 offset-lg-1 col-xs-6 widget-col">
                     <div class="widget contact-widget">
-                         <h3>Registered Office</h3>
-                         <p>71 Dunnigan St
-                              Weatherly, Pennsylvania(PA)</p>
+                         <h3>Registered Office & Head Office</h3>
+                         <p>580 George street level 25 Sydney, nsw Australia</p>
                     </div>
                </div>
-               <div class="col-lg-3 col-xs-6 widget-col">
+               <div class="col-lg-2 offset-lg-1 col-xs-6 widget-col">
+                    <div class="widget contact-widget">
+                         <h3>Branch</h3>
+                         <p>71 Dunnigan St
+                              Weatherly, Pennsylvania(PA) USA</p>
+                    </div>
+               </div>
+               <div class="col-lg-2 col-xs-6 widget-col">
                     <div class="widget contact-widget">
                          <h3>Phone line</h3>
                          <p><br>tel : +(610) 645-8654</p>
