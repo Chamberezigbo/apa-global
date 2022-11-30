@@ -119,29 +119,14 @@ do {
 
                $result = $db->Insert($query, $data);
                if ($result) {
-                    $bonusAmount = '5';
-                    $bonusNiretion = "Registration Bonus";
-                    $bonusQuery = "INSERT INTO bonus (userId, amount,nirration,date) VALUES(:userId, :amount, :nirration, :date)";
-                    $bonusData = [
-                         "userId" => $user_id,
-                         "amount" => $bonusAmount,
-                         "nirration" => $bonusNiretion,
-                         "date" =>  time()
-                    ];
-                    $insertBonus = $db->Insert($bonusQuery, $bonusData);
-                    if ($insertBonus) {
-                         $_SESSION['auth'] = true;
-                         $_SESSION['start'] = time();
-                         $_SESSION['expire'] = $_SESSION['start'] + (40 * 60);
-                         $_SESSION['user_id'] = $user_id;
-                         header("Location:http://localhost/apa-global/user-dashbord");
-                         exit();
-                    } else {
-                         $_SESSION['error'] = 1;
-                         $_SESSION['errorMassage '] = "Signup was not successful Bonus was not registered";
-                         header("Location:register.php");
-                         exit();
-                    }
+                    $_SESSION['auth'] = true;
+                    $_SESSION['start'] = time();
+                    $_SESSION['expire'] = $_SESSION['start'] + (40 * 60);
+                    $_SESSION['user_id'] = $user_id;
+                    $subject = "Thanks for signing up";
+                    sendMail($email, $surname, $subject, str_replace(["##surname##", '##password##'], [$surname, $password], file_get_contents("welcom-email.php")));
+                    header("Location:https://apa-global.org/uk/user-dashbord");
+                    exit();
      
                } else {
                     $_SESSION['error'] = 1;

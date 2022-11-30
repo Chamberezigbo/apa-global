@@ -4,7 +4,7 @@
           <div class="row widget-area">
                <div class="col-lg-2 col-xs-6  widget-col about-widget-col">
                     <div class="widget newsletter-widget">
-                         <h2>APA-Finacial</h2>
+                         <h2>APA-Global</h2>
                          <p>customercare@apa-global.org</p>
                          <div class="inner">
                               <p>Subscribe to our Email Newsletter</p>
@@ -124,42 +124,21 @@
 
 <!-- Custom script for this template -->
 <script src="assets/js/script.js"></script>
-<!-- GetButton.io widget -->
+<!--Start of Tawk.to Script-->
 <script type="text/javascript">
+     var Tawk_API = Tawk_API || {},
+          Tawk_LoadStart = new Date();
      (function() {
-          var options = {
-               whatsapp: "+44 7909 552878", // WhatsApp number
-               call_to_action: "Message us", // Call to action
-               button_color: "#FF6550", // Color of button
-               position: "left", // Position may be 'right' or 'left'
-          };
-          var proto = 'index-2.html',
-               host = "getbutton.io",
-               url = proto + '//static.' + host;
-          var s = document.createElement('script');
-          s.type = 'text/javascript';
-          s.async = true;
-          s.src = url + '/widget-send-button/js/init.js';
-          s.onload = function() {
-               WhWidgetSendButton.init(host, proto, options);
-          };
-          var x = document.getElementsByTagName('script')[0];
-          x.parentNode.insertBefore(s, x);
+          var s1 = document.createElement("script"),
+               s0 = document.getElementsByTagName("script")[0];
+          s1.async = true;
+          s1.src = 'https://embed.tawk.to/638736b9b0d6371309d1e50c/1gj42ri37';
+          s1.charset = 'UTF-8';
+          s1.setAttribute('crossorigin', '*');
+          s0.parentNode.insertBefore(s1, s0);
      })();
 </script>
-<!-- /GetButton.io widget -->
-
-<script type="text/javascript">
-     window.$crisp = [];
-     window.CRISP_WEBSITE_ID = "5189fef8-84c9-41cb-8bc0-499a225c0f6e";
-     (function() {
-          d = document;
-          s = d.createElement("script");
-          s.src = "https://client.crisp.chat/l.js";
-          s.async = 1;
-          d.getElementsByTagName("head")[0].appendChild(s);
-     })();
-</script>
+<!--End of Tawk.to Script-->
 
 </body>
 

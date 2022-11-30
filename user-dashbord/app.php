@@ -21,8 +21,7 @@ if (!$_SESSION['auth']) {
         if ($result) {
             $email = $result['email'];
             $fullName = $result['fullName'];
-            $balance = $result['balance'];
-            $bonus = $result['total_bonus'];
+               $balance = $result['balance'];
             $username = $result['username'];
             ($result['referral'] == NULL) ? $ref = "Null" : $ref = $result['referral'];
             ($result['total_profit'] == NULL) ? $profit = 0 : $profit = $result['total_profit'];
@@ -31,6 +30,19 @@ if (!$_SESSION['auth']) {
             ($result['total_deposit'] == NULL) ? $totalDeposit = 0 : $totalDeposit = $result['total_deposit'];
             ($result['total_withdraws'] == NULL) ? $totalWithdraws = 0 : $totalWithdraws = $result['total_withdraws'];
         }
+          $bonusDB = $db->SelectAll("SELECT * FROM bonus WHERE userId = :uid", [
+               'uid' => $user_Id
+          ]);
+          $bonus = 0;
+
+          if ($bonusDB) {
+               # code...
+               foreach ($bonusDB as $i => $bonusRow) {
+                    # code...
+                    $bonus += $bonusRow['amount'];
+               }
+          }
+          
         //get notices
         $notices = $db->SelectAll("SELECT * FROM notice WHERE user_id = :uid", [
             'uid' => $user_Id

@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once('app.php');
 include('header.php');
 ?>
@@ -33,7 +33,7 @@ include('header.php');
                     <div class="col-md-12 text-center">
                          <strong>You can refer users by sharing your referral link:</strong><br>
                          <div class="mb-3 input-group">
-                              <input type="text" class="form-control myInput readonly text-dark bg-light" value="http://localhost/apa-global/register.php/?ref=<?= $username ?>" id="myInput" readonly="">
+                              <input type="text" class="form-control myInput readonly text-dark bg-light" value="https://apa-global.org/uk/?ref=<?= $username ?>" id="myInput" readonly="">
                               <div class="input-group-append">
                                    <button class="btn btn-outline-secondary" onclick="myFunction()" type="button" id="button-addon2"><i class="fas fa-copy"></i></button>
                               </div>
