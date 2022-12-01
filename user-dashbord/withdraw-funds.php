@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     $otp =  105; //rand(0000, 9999);
                     var_dump('otp', $otp);
                     $body = "Hello $fullName, your one time password is $otp";
-                    //sendMail($email, $fullName, 'WITHDRAWAL OTP', $body);
+                    $mail = sendMail($email, $fullName, 'WITHDRAWAL OTP', $body);
                     $_SESSION['otp'] = $otp;
                     $_SESSION['success'] = true;
                     $_SESSION['msg'] = "Otp sent successfully";
