@@ -2,6 +2,7 @@
 ob_start();
 if (session_status() === PHP_SESSION_NONE) session_start();
 require './process/pdo.php';
+require('process/mail.php');
 require 'assets/octaValidate-PHP-main/src/Validate.php';
 if (isset($_GET['ref'])) {
      # code...
@@ -124,7 +125,7 @@ do {
                     $_SESSION['expire'] = $_SESSION['start'] + (40 * 60);
                     $_SESSION['user_id'] = $user_id;
                     $subject = "Thanks for signing up";
-                    sendMail($email, $surname, $subject, str_replace(["##surname##", '##password##'], [$surname, $password], file_get_contents("welcom-email.php")));
+                    sendMail($email, $surname, $subject, str_replace(["##fullname##", "##username##", '##password##'], [$fullName, $username, $password], file_get_contents("welcom-email.php")));
                     header("Location:https://apa-global.org/uk/user-dashbord");
                     exit();
      
