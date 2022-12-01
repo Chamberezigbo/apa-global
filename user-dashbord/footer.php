@@ -11,7 +11,7 @@
 </footer>
 
 <!-- Place this script before the </head> tag -->
-<script src="https://unpkg.com/octavalidate@1.2.9/native/validate.js"></script>
+<script src="https://unpkg.com/octavalidate@latest/native/validate.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="vendor/chart.js/Chart.min.js"></script>
 <script src="vendor/just-validate/js/just-validate.min.js"></script>
@@ -20,8 +20,6 @@
 <!-- Main File-->
 <script src="js/front.js"></script>
 <script src="../assets/toastr-master/build/toastr.min.js"></script>
-<!-- Place this script before the </head> tag -->
-<script src="https://unpkg.com/octavalidate@1.2.5/native/validate.js"></script>
 
 <script>
      // ------------------------------------------------------- //
