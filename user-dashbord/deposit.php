@@ -24,7 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['pay'])) {
      } else {
           $_SESSION['success'] = false;
           $_SESSION['msg'] = "Payment failed. Try another method";
-          //Header wont move because it is on the same page
           header("Location: ./deposit.php");
      }
      exit();

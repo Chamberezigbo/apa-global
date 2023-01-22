@@ -42,8 +42,9 @@ function sendMail($user_email, $user_name, $subject, $body)
         //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
         $mail->send();
-        echo 'Message has been sent';
+        return 1;
     } catch (Exception $e) {
         echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        return 0;
     }
 }
